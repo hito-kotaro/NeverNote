@@ -31,4 +31,5 @@ rules:
     'no-unused-vars': 1,
     'react/function-component-definition': 0,
     'arrow-body-style': 0,
+    'react/prop-types': 0,
   }
