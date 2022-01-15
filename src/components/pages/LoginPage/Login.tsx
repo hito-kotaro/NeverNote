@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import LoginButton from '../../Button/LoginButton';
 import Input from '../../Input/Input';
 import logo64 from '../../../images/logo_64.png';
@@ -6,9 +9,9 @@ import BackGroundImage from '../../../images/bg.jpg';
 
 const Login = () => {
   const loginStyles: string =
-    'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
+    'before:content mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
   const otherAuthStyles: string =
-    'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
+    'border mt-5 w-3/4 py-2 px-4 text-gray-500 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
 
   const mailPlaceholder = 'mail@example.com';
   const passwordPlaceholder = 'パスワード';
@@ -20,7 +23,7 @@ const Login = () => {
       <div className="hidden md:inline-block h-screen w-1/2 bg-green-600 ">
         <img
           src={BackGroundImage}
-          alt="logo"
+          alt="backgroundImage"
           className=" mx-auto block opacity-50"
         />
         <div className="text-center mt-10 text-[24px] text-white font-extrabold">
@@ -33,12 +36,16 @@ const Login = () => {
       </div>
       <div className="w-full md:w-1/2 h-screen">
         <div className="w-9/12  bg-white mt-5 mx-auto text-center py-3">
-          <img src={logo64} alt="logo" className="mx-auto block mt-5" />
+          <div className="flex justify-center ">
+            <Link to="/">
+              <img src={logo64} alt="logo" className="block mt-5" />
+            </Link>
+          </div>
           <p>大切な情報をちょっと記憶しましょう。</p>
           <LoginButton styles={otherAuthStyles}>Googelで続行</LoginButton>
           <LoginButton styles={otherAuthStyles}>Appleで続ける</LoginButton>
 
-          <div className="bg-white w-3/4 h-3 mx-auto border-b-2" />
+          <div className="bg-white w-3/4 h-3 mx-auto border-b-2 mt-5" />
           <Input
             type="text"
             styles={inputStyles}

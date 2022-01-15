@@ -1,6 +1,5 @@
 import React, { ReactElement, VFC } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import TestPage from '../components/pages/TestPage';
 import Login from '../components/pages/LoginPage/Login';
 import Home from '../components/pages/Home';
 import Note from '../components/pages/Note';
