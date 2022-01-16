@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import useIsAuth from '../../../hooks/useIsAuth';
 
 const useLogin = () => {
-  const { updateAuth, fetchAuth } = useIsAuth();
+  const { updateAuth } = useIsAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
