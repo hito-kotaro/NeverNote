@@ -1,9 +1,9 @@
 import React, { VFC } from 'react';
 
 type Props = {
-  children: string;
+  children: any;
   styles: string;
-  buttonAction?: () => void;
+  buttonAction?: () => Promise<void> | void;
 };
 
 const LoginButton: VFC<Props> = (props) => {

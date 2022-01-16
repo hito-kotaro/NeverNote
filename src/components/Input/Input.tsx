@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { VFC, useState } from 'react';
 
 type Props = {
   type: string;
@@ -7,8 +7,22 @@ type Props = {
 };
 
 const Input: VFC<Props> = (props) => {
+  const [input, setInput] = useState('');
   const { type, styles, placeholder } = props;
-  return <input type={type} className={styles} placeholder={placeholder} />;
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  return (
+    <input
+      type={type}
+      className={styles}
+      placeholder={placeholder}
+      value={input}
+      onChange={onChange}
+    />
+  );
 };
 
 export default Input;
