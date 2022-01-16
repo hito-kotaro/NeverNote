@@ -2,8 +2,10 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
+import useIsAuth from '../../../hooks/useIsAuth';
 
 const useLogin = () => {
+  const { updateAuth, fetchAuth } = useIsAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +27,7 @@ const useLogin = () => {
         },
       );
       setIsLoading(false);
+      updateAuth();
       navigate('/home', { state: result, replace: false });
     } catch (error) {
       setIsLoading(false);

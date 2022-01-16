@@ -14,7 +14,7 @@ const Login = () => {
   const { isLoading, onClickLogin } = useLogin();
 
   const loginStyles: string =
-    'before:content mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
+    'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
   const otherAuthStyles: string =
     'border mt-5 w-3/4 py-2 px-4 text-gray-500 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
 
@@ -46,10 +46,13 @@ const Login = () => {
               <img src={logo64} alt="logo" className="block mt-5" />
             </Link>
           </div>
+
           <p>大切な情報をちょっと記憶しましょう。</p>
+
           <LoginButton styles={otherAuthStyles} buttonAction={blankButton}>
             Googelで続行
           </LoginButton>
+
           <LoginButton styles={otherAuthStyles} buttonAction={blankButton}>
             Appleで続ける
           </LoginButton>
