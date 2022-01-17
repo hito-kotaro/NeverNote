@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import useIsAuth from './useIsAuth';
+import axiosInstance from '../axios/axiosInstance';
 
 const useLogin = () => {
   const { updateAuth } = useIsAuth();
@@ -10,22 +11,15 @@ const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onClickLogin = useCallback(async (email: string, password: string) => {
-    const BASE_URL = 'https://raisetech-memo-api.herokuapp.com/api';
     const auth = {
       email,
       password,
     };
-    const headers = { 'Content-Type': 'application/json' };
+    // const headers = { 'Content-Type': 'application/json' };
 
     try {
       setIsLoading(true);
-      const result: AxiosResponse = await axios.post(
-        `${BASE_URL}/login`,
-        auth,
-        {
-          headers,
-        },
-      );
+      const result: AxiosResponse = await axiosInstance.post('/login', auth);
       setIsLoading(false);
       updateAuth();
       navigate('/home', { state: result, replace: false });
