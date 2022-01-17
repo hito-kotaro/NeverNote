@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AxiosResponse } from 'axios';
 import useIsAuth from './useIsAuth';
-import axiosInstance from '../axios/axiosInstance';
+import axiosInstance from '../libs/axiosInstance';
 
 const useLogin = () => {
   const { updateAuth } = useIsAuth();
