@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import useIsAuth from '../../../hooks/useIsAuth';
+import useIsAuth from './useIsAuth';
 
 const useLogin = () => {
   const { updateAuth } = useIsAuth();
