@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import LoginButton from '../../Button/LoginButton';
+import Button from '../../Button/Button';
 import logo64 from '../../../images/logo_64.png';
 import BackGroundImage from '../../../images/bg.jpg';
 import useLogin from '../../Button/hooks/useLogin';
@@ -49,13 +49,13 @@ const Login = () => {
 
           <p>大切な情報をちょっと記憶しましょう。</p>
 
-          <LoginButton styles={otherAuthStyles} buttonAction={blankButton}>
-            Googelで続行
-          </LoginButton>
+          <Button className={otherAuthStyles} buttonAction={blankButton}>
+            Googleで続行
+          </Button>
 
-          <LoginButton styles={otherAuthStyles} buttonAction={blankButton}>
+          <Button className={otherAuthStyles} buttonAction={blankButton}>
             Appleで続ける
-          </LoginButton>
+          </Button>
 
           <div className="bg-white w-3/4 h-3 mx-auto border-b-2 mt-5" />
 
@@ -75,8 +75,8 @@ const Login = () => {
             onChange={passwordInput.onChange}
           />
 
-          <LoginButton
-            styles={loginStyles}
+          <Button
+            className={loginStyles}
             buttonAction={() =>
               onClickLogin(emailInput.input, passwordInput.input)
             }
@@ -86,7 +86,7 @@ const Login = () => {
             ) : (
               'ログイン'
             )}
-          </LoginButton>
+          </Button>
 
           <p className="mt-5 text-lg">
             <input type="checkbox" className="" />
