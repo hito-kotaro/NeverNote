@@ -13,9 +13,9 @@ const Login = () => {
   const passwordInput = useInputForm();
   const { isLoading, onClickLogin } = useLogin();
 
-  const loginStyles: string =
+  const loginClassName: string =
     'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
-  const otherAuthStyles: string =
+  const otherAuthClassName: string =
     'border mt-5 w-3/4 py-2 px-4 text-gray-500 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
 
   const blankButton = () => {
@@ -49,11 +49,11 @@ const Login = () => {
 
           <p>大切な情報をちょっと記憶しましょう。</p>
 
-          <Button className={otherAuthStyles} buttonAction={blankButton}>
+          <Button className={otherAuthClassName} buttonAction={blankButton}>
             Googleで続行
           </Button>
 
-          <Button className={otherAuthStyles} buttonAction={blankButton}>
+          <Button className={otherAuthClassName} buttonAction={blankButton}>
             Appleで続ける
           </Button>
 
@@ -76,7 +76,7 @@ const Login = () => {
           />
 
           <Button
-            className={loginStyles}
+            className={loginClassName}
             buttonAction={() =>
               onClickLogin(emailInput.input, passwordInput.input)
             }
