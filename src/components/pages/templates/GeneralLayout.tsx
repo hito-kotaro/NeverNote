@@ -1,6 +1,6 @@
 import React, { VFC } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../Leyouts/Header';
 import Footer from '../../Leyouts/Footer';
 
