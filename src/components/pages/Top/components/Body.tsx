@@ -11,7 +11,7 @@ const Body = () => {
     'bg-green-600  text-white mt-10 py-3 px-10 font-semibold rounded-lg shadow-md focus:outline-none';
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 w-9/12  mx-auto">
       <div className="text-center mt-20 text-[48px] font-extrabold">
         仕事もプライベートもなんとなく整理
       </div>
@@ -31,7 +31,7 @@ const Body = () => {
         アカウントをお持ちですか？ ログイン
       </Link>
       <div className="flex my-10">
-        <img src={TopImage} alt="topImage" className="block" />
+        <img src={TopImage} alt="topImage" className="hidden xl:block" />
         <div className="">
           <p className={subTitleStyles}>どこにいても作業はできない</p>
           <p>
