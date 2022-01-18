@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
-import useButtonAnctions from '../../../../hooks/useButtonActions';
-import TopImage from '../../../../images/top_image.png';
-import Button from '../../../Button/Button';
+import useButtonAnctions from '../../../hooks/useButtonActions';
+import TopImage from '../../../images/top_image.png';
+import Button from '../../Button/Button';
 
-const Body = () => {
+const Body: VFC = () => {
   const { blankAntion } = useButtonAnctions();
   const subTitleStyles: string = 'mt-5 font-bold';
   const buttonStyles: string =

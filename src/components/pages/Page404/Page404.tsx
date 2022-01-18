@@ -1,13 +1,13 @@
 import React from 'react';
-import Body from './Body';
 import GeneralLayout from '../templates/GeneralLayout';
+import Page404Body from './Page404Body';
 
-const Top = () => {
+const Page404 = () => {
   return (
     <GeneralLayout>
-      <Body />
+      <Page404Body />
     </GeneralLayout>
   );
 };
 
-export default Top;
+export default Page404;

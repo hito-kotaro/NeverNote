@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import logoSide64 from '../../../../images/logo_side_small.png';
-import Button from '../../../Button/Button';
-import MenuButton from '../../../Button/MenuButton';
+import logoSide64 from '../../images/logo_side_small.png';
+import Button from '../Button/Button';
+import MenuButton from '../Button/MenuButton';
 
 const Header = () => {
   const nevigate = useNavigate();
