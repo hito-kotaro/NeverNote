@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import img404 from '../../../images/img404.jpeg';
+import img404 from '../../images/img404.jpeg';
 
 const Page404Body = () => {
   return (

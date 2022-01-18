@@ -1,10 +1,10 @@
 import React from 'react';
-import Body from './Body';
+import Body from '../../PageBody/TopBody';
 import GeneralLayout from '../templates/GeneralLayout';
 
 const Top = () => {
   return (
-    <GeneralLayout>
+    <GeneralLayout title="メモアプリ -NeverNote で情報を整理">
       <Body />
     </GeneralLayout>
   );

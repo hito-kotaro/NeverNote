@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Button from '../../Button/Button';
@@ -22,6 +23,9 @@ const Login = () => {
 
   return (
     <div className="flex">
+      <Helmet>
+        <title>ようこそ</title>
+      </Helmet>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="hidden md:inline-block h-screen w-1/2 bg-green-600 ">
         <img
