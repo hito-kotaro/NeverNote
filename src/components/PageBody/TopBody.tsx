@@ -1,10 +1,12 @@
 import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
 import useButtonAnctions from '../../hooks/useButtonActions';
+import useResponsive from '../../hooks/useResponsive';
 import TopImage from '../../images/top_image.png';
 import Button from '../Button/Button';
 
 const Body: VFC = () => {
+  const { query } = useResponsive();
   const { blankAntion } = useButtonAnctions();
   const subTitleStyles: string = 'mt-5 font-bold';
   const buttonStyles: string =
@@ -31,7 +33,9 @@ const Body: VFC = () => {
         アカウントをお持ちですか？ ログイン
       </Link>
       <div className="flex my-10">
-        <img src={TopImage} alt="topImage" className="hidden xl:block" />
+        {query.isLaptop && (
+          <img src={TopImage} alt="topImage" className="block" />
+        )}
         <div className="">
           <p className={subTitleStyles}>どこにいても作業はできない</p>
           <p>
