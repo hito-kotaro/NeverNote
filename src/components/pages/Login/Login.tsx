@@ -1,29 +1,31 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import Button from '../../Button/Button';
 import logo64 from '../../../images/logo_64.png';
 import BackGroundImage from '../../../images/bg.jpg';
 import useLogin from '../../../hooks/useLogin';
 import useInputForm from '../../../hooks/useInputForm';
+import useButtonAnctions from '../../../hooks/useButtonActions';
 
 const Login = () => {
   const emailInput = useInputForm();
   const passwordInput = useInputForm();
   const { isLoading, onClickLogin } = useLogin();
+  const { blankAntion } = useButtonAnctions();
 
   const loginClassName: string =
     'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
   const otherAuthClassName: string =
     'border mt-5 w-3/4 py-2 px-4 text-gray-500 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
 
-  const blankButton = () => {
-    toast.error('未実装です');
-  };
-
   return (
     <div className="flex">
+      <Helmet>
+        <title>ようこそ</title>
+      </Helmet>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="hidden md:inline-block h-screen w-1/2 bg-green-600 ">
         <img
@@ -49,11 +51,11 @@ const Login = () => {
 
           <p>大切な情報をちょっと記憶しましょう。</p>
 
-          <Button className={otherAuthClassName} buttonAction={blankButton}>
+          <Button className={otherAuthClassName} buttonAction={blankAntion}>
             Googleで続行
           </Button>
 
-          <Button className={otherAuthClassName} buttonAction={blankButton}>
+          <Button className={otherAuthClassName} buttonAction={blankAntion}>
             Appleで続ける
           </Button>
 
