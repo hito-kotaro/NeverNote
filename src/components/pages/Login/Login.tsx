@@ -12,7 +12,7 @@ import useButtonAnctions from '../../../hooks/useButtonActions';
 const Login = () => {
   const emailInput = useInputForm();
   const passwordInput = useInputForm();
-  const { blankAntion, isLoading, onClickLogin } = useButtonAnctions();
+  const { isLoading, blankAntion, onClickLogin } = useButtonAnctions();
 
   const loginClassName: string =
     'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
