@@ -5,4 +5,7 @@ const axiosInstance = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+axios.defaults.headers.get['Authorization:'] = 'Bearer';
+axios.defaults.headers.post['content-Type'] = 'application/json';
+
 export default axiosInstance;
