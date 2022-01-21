@@ -4,11 +4,20 @@ import { AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import axiosInstance from '../libs/axiosInstance';
 
-const useFetchNotes = () => {
+const usePutNotes = () => {
   const [cookie] = useCookies(['access_token']);
-  const fetchNotes = useCallback(async () => {
+
+  const postNotes = useCallback(async () => {
+    const data = {
+      title: '今日の講義について',
+      category: '授業メモ',
+      description: '第９回の授業メモです\\nこんなことしました。',
+      date: '2021/08/01',
+      mark_div: 1,
+    };
+
     try {
-      const result: AxiosResponse = await axiosInstance.get('/memos', {
+      const result: AxiosResponse = await axiosInstance.post('/memo', data, {
         headers: { Authorization: `Bearer ${cookie.access_token}` },
       });
       console.log(result);
@@ -16,7 +25,7 @@ const useFetchNotes = () => {
       console.log(error);
     }
   }, []);
-  return { fetchNotes };
+  return { postNotes };
 };
 
-export default useFetchNotes;
+export default usePutNotes;
