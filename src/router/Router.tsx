@@ -19,15 +19,15 @@ const Router: VFC = (): ReactElement => {
       {/* authがtrue(ログインしている状態)の時に/loginにアクセスされた場合は/home(ログイン後の画面)にリダイレクトさせたい */}
       <Route
         path="/login"
-        element={auth ? <Navigate to="/home" /> : <Login />}
+        element={fetchAuth() ? <Navigate to="/home" /> : <Login />}
       />
       <Route
         path="/home"
-        element={auth ? <Home /> : <Navigate to="/login" replace />}
+        element={fetchAuth() ? <Home /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/note"
-        element={auth ? <Note /> : <Navigate to="/login" replace />}
+        element={fetchAuth() ? <Note /> : <Navigate to="/login" replace />}
       />
       <Route path="/logout" element={<Logout />} />
 

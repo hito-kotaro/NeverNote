@@ -21,7 +21,6 @@ const useButtonAnctions = () => {
   }, []);
 
   const onClickLogin = async (email: string, password: string) => {
-    // const headers = { 'Content-Type': 'application/json' };
     const auth = {
       email,
       password,
@@ -35,8 +34,7 @@ const useButtonAnctions = () => {
       setCookie('access_token', result.data.access_token);
       localStorage.setItem('auth', 'true');
       localStorage.setItem('userName', `${email}`);
-      // console.log(localStorage.getItem('auth'));
-      console.log('ログインしたよ');
+      updateAuth();
       navigate('/login');
     } catch (error) {
       setIsLoading(false);
