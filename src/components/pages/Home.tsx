@@ -1,26 +1,17 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import Button from '../Button/Button';
-import useNoteAction from '../../hooks/useApiRequests';
 import useButtonAnctions from '../../hooks/useButtonActions';
-import useAuth from '../../hooks/useAuth';
+import useApiRequests from '../../hooks/useApiRequests';
 
 const Home = () => {
   const loginClassName: string =
     'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
-
-  const navigate = useNavigate();
-  const { fetchAuth } = useAuth();
-  const { getNotes } = useNoteAction();
+  const { getNotes, getStatus } = useApiRequests();
   const { onClickLogout } = useButtonAnctions();
 
-  const logout = () => {
-    navigate('/logout');
-  };
-
-  const test = () => {
-    console.log(fetchAuth());
-  };
+  useEffect(() => {
+    getNotes();
+  }, []);
 
   return (
     <>
@@ -29,14 +20,10 @@ const Home = () => {
           ログアウト
         </Button>
       </div>
+
       <div>
-        <Button className={loginClassName} buttonAction={getNotes}>
-          getNote
-        </Button>
-      </div>
-      <div>
-        <Button className={loginClassName} buttonAction={test}>
-          test
+        <Button className={loginClassName} buttonAction={getStatus}>
+          getStatus
         </Button>
       </div>
       <div>{localStorage.getItem('userName')}さん</div>
