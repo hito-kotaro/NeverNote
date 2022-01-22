@@ -1,8 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, VFC } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Link } from 'react-router-dom';
 
-const MenuButton = () => {
+type Props = {
+  isAuth: boolean;
+};
+
+const MenuButton: VFC<Props> = (props) => {
+  const { isAuth } = props;
+
   return (
     <div className="w-24 text-right fixed top-5 right-1">
       <Menu as="div" className="relative inline-block text-left w-18">
@@ -21,18 +27,47 @@ const MenuButton = () => {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/login"
-                  className={`${
-                    active ? 'bg-green-500 text-white' : 'text-gray-900'
-                  } group flex rounded-md items-center  px-2 py-2 text-sm`}
-                >
-                  ログイン
-                </Link>
-              )}
-            </Menu.Item>
+            {isAuth ? (
+              <>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/home"
+                      className={`${
+                        active ? 'bg-green-500 text-white' : 'text-gray-900'
+                      } group flex rounded-md items-center  px-2 py-2 text-sm`}
+                    >
+                      ホーム画面へ
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/logout"
+                      className={`${
+                        active ? 'bg-green-500 text-white' : 'text-gray-900'
+                      } group flex rounded-md items-center  px-2 py-2 text-sm`}
+                    >
+                      ログアウト
+                    </Link>
+                  )}
+                </Menu.Item>
+              </>
+            ) : (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to="/login"
+                    className={`${
+                      active ? 'bg-green-500 text-white' : 'text-gray-900'
+                    } group flex rounded-md items-center  px-2 py-2 text-sm`}
+                  >
+                    ログイン
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
           </Menu.Items>
         </Transition>
       </Menu>

@@ -3,52 +3,52 @@ import { useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
-import useIsAuth from './useIsAuth';
+import useAuth from './useAuth';
 import axiosInstance from '../libs/axiosInstance';
 
 const useButtonAnctions = () => {
-  const { updateAuth } = useIsAuth();
+  const { updateAuth } = useAuth();
   const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
-  const [cookies, setCookie] = useCookies(['access_token']);
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
   const [isLoading, setIsLoading] = useState(false);
 
   const onClickLogout = useCallback(() => {
-    // ローカルストレージのuserNameを削除する
-    // cookie(access_token)を削除する
-    // isAuthをfalseにする
-    // トップ画面に遷移
+    localStorage.setItem('auth', 'false');
+    updateAuth();
+    removeCookie('access_token');
+    navigate('/');
   }, []);
 
-  const onClickLogin = useCallback(
-    async (email: string, password: string) => {
-      // const headers = { 'Content-Type': 'application/json' };
-      const auth = {
-        email,
-        password,
-      };
-      try {
-        setIsLoading(true);
-        const result: AxiosResponse = await axiosInstance.post('/login', auth);
+  const onClickLogin = async (email: string, password: string) => {
+    // const headers = { 'Content-Type': 'application/json' };
+    const auth = {
+      email,
+      password,
+    };
+    try {
+      setIsLoading(true);
+      const result: AxiosResponse = await axiosInstance.post('/login', auth);
 
-        setIsLoading(false);
-        updateAuth();
-        setCookie('access_token', result.data.access_token);
-        localStorage.setItem('userName', 'email');
-        navigate('/home');
-      } catch (error) {
-        setIsLoading(false);
-        toast.error('ログインできません');
-      }
-    },
-    [updateAuth],
-  );
+      setIsLoading(false);
+      updateAuth();
+      setCookie('access_token', result.data.access_token);
+      localStorage.setItem('auth', 'true');
+      localStorage.setItem('userName', `${email}`);
+      // console.log(localStorage.getItem('auth'));
+      console.log('ログインしたよ');
+      navigate('/login');
+    } catch (error) {
+      setIsLoading(false);
+      toast.error('ログインできません');
+    }
+  };
 
   const blankAntion = () => {
     toast.error('未実装です');
   };
 
-  return { isLoading, blankAntion, onClickLogin };
+  return { isLoading, blankAntion, onClickLogin, onClickLogout };
 };
 
 export default useButtonAnctions;

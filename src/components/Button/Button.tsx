@@ -1,9 +1,10 @@
 import React, { VFC } from 'react';
+import { NavigateFunction } from 'react-router-dom';
 
 type Props = {
   children: any;
   className: string;
-  buttonAction?: () => Promise<void> | void;
+  buttonAction?: () => void | Promise<void> | void | NavigateFunction;
 };
 
 const Button: VFC<Props> = (props) => {
