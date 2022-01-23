@@ -3,18 +3,16 @@ import { useCallback } from 'react';
 import { AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import axiosInstance from '../libs/axiosInstance';
-import useButtonAnctions from './useButtonActions';
+import useAuth from './useAuth';
 import type Note from '../types/Note';
 
 const useApiRequests = () => {
   const [cookie] = useCookies(['access_token']);
-  const { onClickLogout } = useButtonAnctions();
+  const { logout } = useAuth();
   // const { checkAuthCookie2 } = useAuth();
 
-  const closeSettion = useCallback((error) => {
-    console.log(error);
-    alert('再ログインしてください');
-    onClickLogout();
+  const closeSettion = useCallback(() => {
+    logout('再ログインしてください');
   }, []);
 
   const getStatus = useCallback(async () => {
@@ -23,7 +21,7 @@ const useApiRequests = () => {
         headers: { Authorization: `Bearer ${cookie.access_token}` },
       });
     } catch (error) {
-      closeSettion(error);
+      closeSettion();
     }
   }, []);
 
@@ -35,7 +33,7 @@ const useApiRequests = () => {
       console.log(result.data);
       return result;
     } catch (error) {
-      closeSettion(error);
+      closeSettion();
     }
   }, []);
 
@@ -56,7 +54,7 @@ const useApiRequests = () => {
       });
       // console.log(result.data);
     } catch (error) {
-      closeSettion(error);
+      closeSettion();
     }
   }, []);
 

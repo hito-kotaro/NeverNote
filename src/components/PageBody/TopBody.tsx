@@ -1,13 +1,13 @@
 import React, { VFC } from 'react';
 import { Link } from 'react-router-dom';
-import useButtonAnctions from '../../hooks/useButtonActions';
+import useAuth from '../../hooks/useAuth';
 import useResponsive from '../../hooks/useResponsive';
 import TopImage from '../../images/top_image.png';
 import Button from '../Button/Button';
 
 const Body: VFC = () => {
   const { query } = useResponsive();
-  const { blankAntion } = useButtonAnctions();
+  const { blankAntion } = useAuth();
   const subTitleStyles: string = 'mt-5 font-bold';
   const buttonStyles: string =
     'bg-green-600  text-white mt-10 py-3 px-10 font-semibold rounded-lg shadow-md focus:outline-none';

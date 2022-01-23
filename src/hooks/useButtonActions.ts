@@ -13,11 +13,12 @@ const useButtonAnctions = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onClickLogout = useCallback(() => {
+  const onClickLogout = useCallback((msg: string) => {
     localStorage.setItem('auth', 'false');
     updateAuth();
     removeCookie('access_token');
     navigate('/');
+    toast.error(msg);
   }, []);
 
   const onClickLogin = async (email: string, password: string) => {
@@ -49,4 +50,4 @@ const useButtonAnctions = () => {
   return { isLoading, blankAntion, onClickLogin, onClickLogout };
 };
 
-export default useButtonAnctions;
+// export default useButtonAnctions;

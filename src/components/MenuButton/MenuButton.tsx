@@ -1,7 +1,8 @@
 import React, { Fragment, VFC } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import MenuItemButton from './MenuItemButton';
-import useButtonAction from '../../hooks/useButtonActions';
+// import useButtonAction from '../../hooks/useButtonActions';
+import useAuth from '../../hooks/useAuth';
 
 type Props = {
   isAuth: boolean;
@@ -9,7 +10,7 @@ type Props = {
 
 const MenuButton: VFC<Props> = (props) => {
   const { isAuth } = props;
-  const { onClickLogout } = useButtonAction();
+  const { logout } = useAuth();
 
   return (
     <div className="w-24 text-right fixed top-5 right-1">
@@ -33,7 +34,10 @@ const MenuButton: VFC<Props> = (props) => {
               <>
                 <MenuItemButton to="/home">ホーム画面へ</MenuItemButton>
 
-                <MenuItemButton to="/" onClick={onClickLogout}>
+                <MenuItemButton
+                  to="/"
+                  onClick={() => logout('ログアウトしました')}
+                >
                   ログアウト
                 </MenuItemButton>
               </>
