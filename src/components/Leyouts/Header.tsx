@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoSide64 from '../../images/logo_side_small.png';
 import Button from '../Button/Button';
-import MenuButton from '../Button/MenuButton';
+import MenuButton from '../MenuButton/MenuButton';
 import useResponsive from '../../hooks/useResponsive';
 import useButtonAnctions from '../../hooks/useButtonActions';
 import useAuth from '../../hooks/useAuth';
@@ -13,7 +13,7 @@ const Header = () => {
   const { onClickLogout } = useButtonAnctions();
   const navigate = useNavigate();
   const buttonStyles: string =
-    'ring-2 ring-green-700 text-green-700 hover:text-green-500 hover:ring-2 hover:ring-green-500 mt-5 py-2 px-4 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
+    'ml-3 ring-2 ring-green-700 text-green-700 hover:text-green-500 hover:ring-2 hover:ring-green-500 mt-5 py-2 px-4 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
   const { query } = useResponsive();
   const home = () => {
     navigate('/home');
