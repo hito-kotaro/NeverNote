@@ -3,6 +3,7 @@ import { Menu, Transition } from '@headlessui/react';
 import MenuItemButton from './MenuItemButton';
 // import useButtonAction from '../../hooks/useButtonActions';
 import useAuth from '../../hooks/useAuth';
+import Button from '../Button/Button';
 
 type Props = {
   isAuth: boolean;
@@ -34,12 +35,13 @@ const MenuButton: VFC<Props> = (props) => {
               <>
                 <MenuItemButton to="/home">ホーム画面へ</MenuItemButton>
 
-                <MenuItemButton
-                  to="/"
-                  onClick={() => logout('ログアウトしました')}
+                <Button
+                  className="w-full hover:bg-green-500 hover:text-white text-gray-900
+                 group flex rounded-md items-center  px-2 py-2 text-sm"
+                  buttonAction={() => logout('ログアウトしました')}
                 >
                   ログアウト
-                </MenuItemButton>
+                </Button>
               </>
             ) : (
               <MenuItemButton to="/home">ログイン</MenuItemButton>
