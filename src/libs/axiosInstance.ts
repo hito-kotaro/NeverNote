@@ -1,10 +1,18 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: 'https://raisetech-memo-api.herokuapp.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export default axiosInstance;
+export const axiosTokenInstance = axios.create({
+  baseURL: 'https://raisetech-memo-api.herokuapp.com/api',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+    'Content-Type': 'application/json',
+  },
+});
+
+// export default axiosInstance;
