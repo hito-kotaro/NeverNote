@@ -18,7 +18,15 @@ const Router: VFC = (): ReactElement => {
       />
       <Route
         path="/home"
-        element={fetchAuth() ? <Home /> : <Navigate to="/login" replace />}
+        element={
+          fetchAuth() ? (
+            <div className="bg-gray-900">
+              <Home />
+            </div>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
       <Route
         path="/note"
