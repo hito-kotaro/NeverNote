@@ -17,7 +17,7 @@ const Top: VFC<Props> = (props) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen ">
         <Toaster position="top-right" reverseOrder={false} />
         <Header />
         {children}

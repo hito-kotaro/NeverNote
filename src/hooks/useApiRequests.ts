@@ -15,23 +15,16 @@ const useApiRequests = () => {
 
   const getStatus = useCallback(async () => {
     try {
-      const result: AxiosResponse = await axiosTokenInstance.get('/memos');
-      console.log(result.status);
+      await axiosTokenInstance.get('/memos');
     } catch (error) {
       closeSettion();
     }
   }, []);
 
   const getNotes = useCallback(async () => {
-    console.log(axiosTokenInstance);
-    axiosTokenInstance.interceptors.request.use((request) => {
-      console.log('Starting Request: ', request);
-      return request;
-    });
-
     try {
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
-      console.log(result.data);
+      // console.log(result.data);
       return result;
     } catch (error) {
       closeSettion();
@@ -44,7 +37,7 @@ const useApiRequests = () => {
       category: '授業メモ',
       description: '第９回の授業メモです\\nこんなことしました。',
       date: '2021/08/01',
-      mark_div: 1,
+      mark_div: 0,
     };
 
     try {

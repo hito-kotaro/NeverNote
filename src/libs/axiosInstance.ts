@@ -18,5 +18,3 @@ export const createAxiosTokenInstance = () => {
 
   return axiosTokenInstance;
 };
-
-// export default axiosInstance;
