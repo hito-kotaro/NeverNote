@@ -1,8 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, VFC } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { Link } from 'react-router-dom';
+import MenuItemButton from './MenuItemButton';
+// import useButtonAction from '../../hooks/useButtonActions';
+import useAuth from '../../hooks/useAuth';
+import Button from '../Button/Button';
 
-const MenuButton = () => {
+type Props = {
+  isAuth: boolean;
+};
+
+const MenuButton: VFC<Props> = (props) => {
+  const { isAuth } = props;
+  const { logout } = useAuth();
+
   return (
     <div className="w-24 text-right fixed top-5 right-1">
       <Menu as="div" className="relative inline-block text-left w-18">
@@ -21,18 +31,21 @@ const MenuButton = () => {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/login"
-                  className={`${
-                    active ? 'bg-green-500 text-white' : 'text-gray-900'
-                  } group flex rounded-md items-center  px-2 py-2 text-sm`}
+            {isAuth ? (
+              <>
+                <MenuItemButton to="/home">ホーム画面へ</MenuItemButton>
+
+                <Button
+                  className="w-full hover:bg-green-500 hover:text-white text-gray-900
+                 group flex rounded-md items-center  px-2 py-2 text-sm"
+                  buttonAction={() => logout('ログアウトしました')}
                 >
-                  ログイン
-                </Link>
-              )}
-            </Menu.Item>
+                  ログアウト
+                </Button>
+              </>
+            ) : (
+              <MenuItemButton to="/home">ログイン</MenuItemButton>
+            )}
           </Menu.Items>
         </Transition>
       </Menu>

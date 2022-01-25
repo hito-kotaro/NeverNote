@@ -32,4 +32,5 @@ rules:
     'react/function-component-definition': 0,
     'arrow-body-style': 0,
     'react/prop-types': 0,
+    'react/jsx-no-useless-fragment': 0,
   }
