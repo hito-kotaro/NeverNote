@@ -1,12 +1,14 @@
 /* eslint-disable consistent-return */
 import { useCallback } from 'react';
 import { AxiosResponse } from 'axios';
-import { axiosTokenInstance } from '../libs/axiosInstance';
+import { createAxiosTokenInstance } from '../libs/axiosInstance';
 import useAuth from './useAuth';
 import type Note from '../types/Note';
 
 const useApiRequests = () => {
   const { logout } = useAuth();
+
+  const axiosTokenInstance = createAxiosTokenInstance();
   const closeSettion = useCallback(() => {
     logout('再ログインしてください');
   }, []);
@@ -21,6 +23,12 @@ const useApiRequests = () => {
   }, []);
 
   const getNotes = useCallback(async () => {
+    console.log(axiosTokenInstance);
+    axiosTokenInstance.interceptors.request.use((request) => {
+      console.log('Starting Request: ', request);
+      return request;
+    });
+
     try {
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
       console.log(result.data);
