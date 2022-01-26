@@ -3,10 +3,12 @@ import { useCallback } from 'react';
 import { AxiosResponse } from 'axios';
 import { createAxiosTokenInstance } from '../libs/axiosInstance';
 import useAuth from './useAuth';
+import useNotes from './useNotes';
 import type Note from '../types/Note';
 
 const useApiRequests = () => {
   const { logout } = useAuth();
+  const { notes, updateNotes } = useNotes();
 
   const axiosTokenInstance = createAxiosTokenInstance();
   const closeSettion = useCallback(() => {
@@ -24,8 +26,8 @@ const useApiRequests = () => {
   const getNotes = useCallback(async () => {
     try {
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
+      updateNotes(result.data);
       // console.log(result.data);
-      return result;
     } catch (error) {
       closeSettion();
     }
