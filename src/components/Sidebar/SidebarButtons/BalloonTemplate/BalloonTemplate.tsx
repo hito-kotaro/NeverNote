@@ -8,8 +8,8 @@ type Props = {
 const BalloonTemplate: VFC<Props> = (props) => {
   const { children, balloonMsg } = props;
   return (
-    <div id="balloonoya" className="">
-      <span id="balloon" className="text-white font-bold bg-gray-700">
+    <div id="balloon">
+      <span id="balloon-children" className="text-white font-bold bg-gray-700">
         {balloonMsg}
       </span>
       {children}

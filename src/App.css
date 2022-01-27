@@ -52,23 +52,27 @@
   }
 }
 
-#balloonoya {
+#balloon {
   position: relative;
 }
-#balloonoya:hover #balloon {
-  display: inline-block;
+#balloon:hover #balloon-children {
+  display: block;
 }
-#balloon {
+#balloon-children {
   position: absolute;
   display: none;
-  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
   left: 150%;
   top: 25%;
   height: 28px;
   white-space: nowrap;
 }
 
-#balloon::before {
+#balloon-children::before {
   border-right: 14px solid rgba(55, 65, 81);
   border-top: 14px solid transparent;
   border-bottom: 14px solid transparent;
