@@ -12,9 +12,9 @@ type Props = {
 const NoteWrap: VFC<Props> = (props) => {
   const { textColor, color, wrapMsg, notes } = props;
   return (
-    <>
+    <div className="">
       <div className="text-green-500 font-bold underline">{wrapMsg}</div>
-      <div className="mt-3 mx-auto flex overflow-x-auto">
+      <div id="is-scroll" className="mt-3 mx-auto flex overflow-x-auto">
         {notes.map((note: NoteType) => (
           <NoteListItem
             key={note.id}
@@ -24,7 +24,7 @@ const NoteWrap: VFC<Props> = (props) => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 export default NoteWrap;

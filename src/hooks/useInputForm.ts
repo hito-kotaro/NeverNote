@@ -9,7 +9,12 @@ const useInputForm = () => {
     },
     [],
   );
-  return { onChange, input };
+
+  const clearInput = () => {
+    setInput('');
+  };
+
+  return { onChange, input, clearInput };
 };
 
 export default useInputForm;
