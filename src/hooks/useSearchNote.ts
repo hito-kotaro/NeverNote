@@ -4,12 +4,12 @@ import notesState from '../store/notesState';
 import type NoteType from '../types/Note';
 
 const useSearchNote = () => {
-  const [notes, setNotes] = useRecoilState(notesState);
-  const [searchedNotes, setSearchedNotes] = useState<NoteType[]>();
+  const [notes] = useRecoilState(notesState);
+  const [searchedNotes, setSearchedNotes] = useState<NoteType[]>(notes);
 
   const searchNote = useCallback((input: string) => {
     const filterd = notes.filter((note) => {
-      return !note.title.indexOf(input);
+      return !note.title.indexOf(input) && input.length !== 0;
     });
     setSearchedNotes(filterd);
   }, []);

@@ -16,7 +16,7 @@ const NoteListItem: VFC<Props> = (props) => {
       >
         <div className="font-bold ">{note.title}</div>
         <div className="overflow-hidden h-36">{note.description}</div>
-        <div className=" text-gray-900">{note.date}</div>
+        <div className=" text-gray-900 text-right">{note.date}</div>
       </div>
     </div>
   );

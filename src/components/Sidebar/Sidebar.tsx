@@ -4,18 +4,18 @@ import {
   AiFillHome,
   AiOutlinePlus,
   AiFillDelete,
-  AiOutlineSearch,
   AiFillTags,
 } from 'react-icons/ai';
 import { RiStickyNoteFill } from 'react-icons/ri';
 import SidebarIcon from './SidebarIcon';
-import SearchButton from './SidebarButtons/SearchButton/SearcButton';
+import SearchButton from './SidebarButtons/Search/SearcButton';
 
 const Sidebar = () => {
   return (
     <div id="sidebar" className="sticky top-0 bg-gray-800 h-screen z-50">
       <hr className=" my-5 mx-2 sidebar-hr" />
       <SearchButton />
+
       <SidebarIcon icon={<AiOutlinePlus size="32" color="#4ade80" />} text="" />
       <SidebarIcon icon={<AiFillHome size="32" color="#4ade80" />} text="" />
       <SidebarIcon
