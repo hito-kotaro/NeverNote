@@ -1,5 +1,5 @@
 import React, { ChangeEvent, VFC } from 'react';
-import type NoteType from '../../../../types/Note';
+import type NoteType from '../../../types/Note';
 
 type Props = {
   input: string;

@@ -6,6 +6,11 @@ import type NoteType from '../types/Note';
 const useSearchNote = () => {
   const [notes] = useRecoilState(notesState);
   const [searchedNotes, setSearchedNotes] = useState<NoteType[]>(notes);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggelOpen = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
 
   const searchNote = useCallback((input: string) => {
     const filterd = notes.filter((note) => {
@@ -14,7 +19,7 @@ const useSearchNote = () => {
     setSearchedNotes(filterd);
   }, []);
 
-  return { searchedNotes, searchNote };
+  return { searchedNotes, searchNote, toggelOpen, isOpen };
 };
 
 export default useSearchNote;

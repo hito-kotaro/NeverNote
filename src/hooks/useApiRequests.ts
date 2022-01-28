@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { createAxiosTokenInstance } from '../libs/axiosInstance';
 import useAuth from './useAuth';
@@ -8,7 +8,8 @@ import type Note from '../types/Note';
 
 const useApiRequests = () => {
   const { logout } = useAuth();
-  const { notes, updateNotes } = useNotes();
+  const [isLoading, setIsLoading] = useState(false);
+  const { updateNotes } = useNotes();
 
   const axiosTokenInstance = createAxiosTokenInstance();
   const closeSettion = useCallback(() => {
@@ -25,9 +26,11 @@ const useApiRequests = () => {
 
   const getNotes = useCallback(async () => {
     try {
+      setIsLoading(true);
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
       updateNotes(result.data);
       // console.log(result.data);
+      setIsLoading(false);
     } catch (error) {
       closeSettion();
     }
@@ -50,6 +53,6 @@ const useApiRequests = () => {
     }
   }, []);
 
-  return { getNotes, postNote, getStatus };
+  return { getNotes, postNote, getStatus, isLoading };
 };
 export default useApiRequests;

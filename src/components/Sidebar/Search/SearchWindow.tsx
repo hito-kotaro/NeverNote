@@ -1,8 +1,8 @@
 import React, { useEffect, VFC } from 'react';
 import SearchForm from './SearchForm';
-import type NoteType from '../../../../types/Note';
-import useSearchNote from '../../../../hooks/useSearchNote';
-import useInputForm from '../../../../hooks/useInputForm';
+import type NoteType from '../../../types/Note';
+import useSearchNote from '../../../hooks/useSearchNote';
+import useInputForm from '../../../hooks/useInputForm';
 
 const SearchWindow: VFC = () => {
   const { searchedNotes, searchNote } = useSearchNote();
