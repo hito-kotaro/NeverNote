@@ -32,7 +32,7 @@ const useAuth = () => {
       localStorage.setItem('token', result.data.access_token);
       localStorage.setItem('auth', 'true');
       localStorage.setItem('userName', `${email}`);
-      navigate('/home');
+      navigate('/mypage');
     } catch (error) {
       setIsLoading(false);
       toast.error('ログインできません');

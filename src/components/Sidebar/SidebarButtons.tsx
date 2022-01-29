@@ -8,11 +8,14 @@ import {
   AiFillDelete,
 } from 'react-icons/ai';
 import { RiStickyNoteFill } from 'react-icons/ri';
+import { useRecoilState } from 'recoil';
+import pageIdState from '../../store/pageIdState';
 import SidebarCommonButton from './SidebarCommonButton';
 import SearchWindow from './Search/SearchWindow';
 import useSearchNote from '../../hooks/useSearchNote';
 
 const SidebarButtons = () => {
+  const [pageId, setPageId] = useRecoilState(pageIdState);
   const { toggelOpen, isOpen } = useSearchNote();
 
   const dummy = () => {
@@ -32,7 +35,7 @@ const SidebarButtons = () => {
 
       <SidebarCommonButton
         balloonMsg="新しいノート"
-        buttonAction={dummy}
+        buttonAction={() => setPageId('note')}
         isOpen={false}
       >
         <AiOutlinePlus size="32" color="#4ade80" />
@@ -40,7 +43,7 @@ const SidebarButtons = () => {
 
       <SidebarCommonButton
         balloonMsg="ホーム"
-        buttonAction={dummy}
+        buttonAction={() => setPageId('home')}
         isOpen={false}
       >
         <AiFillHome size="24" color="#4ade80" />
@@ -48,7 +51,7 @@ const SidebarButtons = () => {
 
       <SidebarCommonButton
         balloonMsg="ノート"
-        buttonAction={dummy}
+        buttonAction={() => setPageId('note')}
         isOpen={false}
       >
         <RiStickyNoteFill size="24" color="#4ade80" />

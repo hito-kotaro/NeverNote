@@ -27,7 +27,7 @@ const HomeBody = () => {
             </p>
           </div>
           <div className="">
-            <div className={`mx-5 mt-10 w-ful p-2 rounded-md ${middleColoe}`}>
+            <div className={`  mx-5 mt-10  p-2 rounded-md ${middleColoe}`}>
               <NoteWrap
                 isLoading={isLoading}
                 notes={notes}
@@ -36,7 +36,7 @@ const HomeBody = () => {
                 color={lightColoe}
               />
             </div>
-            <div className={`mx-5 mt-10 w-ful p-2 rounded-md ${middleColoe}`}>
+            <div className={` mx-5 mt-10  p-2 rounded-md ${middleColoe}`}>
               <NoteWrap
                 isLoading={isLoading}
                 notes={notes}

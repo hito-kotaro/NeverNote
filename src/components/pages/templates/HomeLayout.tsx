@@ -15,11 +15,11 @@ const HomeTmplate: VFC<Props> = (props) => {
   }, []);
 
   return (
-    <div className="flex h-full  ">
+    <div className="flex h-full ">
       <Sidebar />
-      <div id="home-main" className="h-full w-5/6 mx-auto">
-        {children}
-      </div>
+      {children}
+      {/* <div id="home-main" className="h-full w-full mx-auto bg-red-200">
+      </div> */}
     </div>
   );
 };
