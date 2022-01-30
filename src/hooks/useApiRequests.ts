@@ -39,6 +39,7 @@ const useApiRequests = () => {
     try {
       setIsLoading(true);
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
+      console.log(result.data);
       // 取得が認証エラー(401)で失敗したらログアウト
       if (result.status === 401) closeSettion();
       updateNotes(result.data);
@@ -77,14 +78,18 @@ const useApiRequests = () => {
     }
   }, []);
 
-  const putNote = async (noteData: Note) => {
+  const putNote = useCallback(async (noteData: Note) => {
     if (noteData) {
       const instance = createPutNoteInstance(noteData.id);
 
       try {
         setIsLoading(true);
+        console.log(noteData);
         const result = await instance.put('', noteData);
+
+        fetchNotes();
         console.log(result);
+        setCurrentState(noteData);
         setIsLoading(false);
         toast.success(`「${noteData.title}」を更新しました`);
       } catch (error) {
@@ -92,7 +97,7 @@ const useApiRequests = () => {
         console.log(error);
       }
     }
-  };
+  }, []);
 
   const deleteNote = useCallback(async (noteData: Note) => {
     // console.log(noteData);

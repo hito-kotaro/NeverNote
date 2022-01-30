@@ -1,7 +1,7 @@
 import React, { useState, useEffect, VFC } from 'react';
 import { useRecoilState } from 'recoil';
 import { Toaster } from 'react-hot-toast';
-import { AiFillDelete, AiFillSave } from 'react-icons/ai';
+import { AiFillDelete, AiFillSave, AiOutlineConsoleSql } from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
 import currentNoteState from '../../store/currentNoteState';
 import Button from '../Button/Button';
@@ -35,6 +35,7 @@ const NoteTextArea: VFC = () => {
 
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
+    console.log('koko');
     titleChangeHandler.initInput(currentNote.title);
     descriptionChangeHandler.initInput(currentNote.description);
   }, [currentNote]);
@@ -49,10 +50,12 @@ const NoteTextArea: VFC = () => {
 
   // ノートを削除して、notesに変更があったらcurrentNoteを変更する
   useEffect(() => {
-    console.log(`DelAfter:${notes[0].id}`);
+    console.log(notes);
+    console.log(notes[0]);
+    // console.log(`DelAfter:${notes[0].id}`);
     setCurrentState(notes[0]);
-    console.log(`set:${notes[0].id}`);
-  }, [notes]);
+    // console.log(`set:${notes[0].title}`);
+  }, [notes.length]);
 
   // useEffect(() => {
   //   console.log('getNote');

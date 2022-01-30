@@ -27,7 +27,7 @@ const Header = () => {
             <>
               <Button
                 className={buttonStyles}
-                buttonAction={() => navigate('/home')}
+                buttonAction={() => navigate('/mypage')}
               >
                 ホーム画面へ
               </Button>

@@ -14,10 +14,6 @@ const NoteListVerticle: VFC = () => {
   // const { isLoading } = props;
   const isLoading = false;
 
-  useEffect(() => {
-    fetchNotes();
-  }, [currentNote.date, currentNote.title]);
-
   return (
     <div className="sticky text-white w-80 h-screen overflow-y-scroll is-scroll my-auto bg-gray-800">
       <div className="text-white font-bold text-lg pl-3 mb-5"> ノート</div>
