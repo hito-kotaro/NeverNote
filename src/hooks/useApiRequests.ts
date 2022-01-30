@@ -1,7 +1,10 @@
 /* eslint-disable consistent-return */
 import { useCallback, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { createAxiosTokenInstance } from '../libs/axiosInstance';
+import {
+  createAxiosTokenInstance,
+  createPutNoteInstance,
+} from '../libs/axiosInstance';
 import useAuth from './useAuth';
 import useNotes from './useNotes';
 import type Note from '../types/Note';
@@ -53,6 +56,22 @@ const useApiRequests = () => {
     }
   }, []);
 
-  return { getNotes, postNote, getStatus, isLoading };
+  const putNote = async (noteData: Note) => {
+    // console.log(noteData);
+    if (noteData) {
+      const instance = createPutNoteInstance(noteData.id);
+
+      try {
+        const putResult = await instance.put('', noteData);
+        console.log(putResult);
+      } catch (error) {
+        // closeSettion();
+        console.log(error);
+      }
+    }
+  };
+
+  return { getNotes, postNote, getStatus, isLoading, putNote };
 };
+
 export default useApiRequests;

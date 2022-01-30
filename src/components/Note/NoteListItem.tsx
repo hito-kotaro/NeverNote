@@ -22,6 +22,7 @@ const NoteListItem: VFC<Props> = (props) => {
   const clickNote = () => {
     setCurrentNote(note);
     setPageId('note');
+    console.log(note);
   };
 
   return (
@@ -30,8 +31,12 @@ const NoteListItem: VFC<Props> = (props) => {
         <div
           className={`w-40 h-52 hover:bg-gray-600 hover:drop-shadow-lg drop-shadow-none rounded-md p-2 m-2 ${color} ${textColor} `}
         >
-          <div className="font-bold overflow-hidden">{note.title}</div>
-          <div className="overflow-hidden h-36">{note.description}</div>
+          <p className=" text-left font-bold h-5  overflow-hidden">
+            {note.title}
+          </p>
+          <div className=" text-left text-sm overflow-hidden h-36">
+            {note.description}
+          </div>
           <div className=" text-gray-900 text-right">{note.date}</div>
         </div>
       </Button>

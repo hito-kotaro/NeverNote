@@ -37,18 +37,18 @@ const NoteListBody: VFC = () => {
   return (
     <>
       {query.isLaptop ? (
-        <>
-          <div className="flex ">
-            <NoteListVerticle
-              isLoading={isLoading}
-              notes={notes}
-              textColor={textColor}
-              color={lightColoe}
-            />
-            <NoteTextArea />
-          </div>
-        </>
+        // <>
+        <div className="flex w-full">
+          <NoteListVerticle
+            isLoading={isLoading}
+            notes={notes}
+            textColor={textColor}
+            color={lightColoe}
+          />
+          <NoteTextArea />
+        </div>
       ) : (
+        // </>
         // ここにスマホ用の記述
         ''
       )}

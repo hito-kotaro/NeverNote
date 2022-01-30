@@ -2,6 +2,7 @@ import { atom } from 'recoil';
 import type Note from '../types/Note';
 
 const defaultNote: Note = {
+  id: '0',
   title: 'テストノート',
   category: '',
   description: 'テスト',
