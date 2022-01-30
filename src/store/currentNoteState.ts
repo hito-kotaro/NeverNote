@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import type Note from '../types/Note';
+import type Note from '../types/NoteType';
 
 const defaultNote: Note = {
   id: '0',

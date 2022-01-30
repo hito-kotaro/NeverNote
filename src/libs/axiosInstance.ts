@@ -29,3 +29,13 @@ export const createPutNoteInstance = (id: string) => {
   });
   return putNoteInstance;
 };
+
+export const createDeleteNoteInstance = () => {
+  const deleteNoteInstance = axios.create({
+    baseURL: `https://raisetech-memo-api.herokuapp.com/api/memo/`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  return deleteNoteInstance;
+};

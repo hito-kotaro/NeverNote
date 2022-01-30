@@ -1,6 +1,6 @@
 import React, { useEffect, VFC } from 'react';
 import SearchForm from './SearchForm';
-import type NoteType from '../../../types/Note';
+import type NoteType from '../../../types/NoteType';
 import useSearchNote from '../../../hooks/useSearchNote';
 import useInputForm from '../../../hooks/useInputForm';
 

@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import currentNotesState from '../store/currentNoteState';
 import notesState from '../store/notesState';
-import type Note from '../types/Note';
+import type Note from '../types/NoteType';
 
 const useNotes = () => {
   const [notes, setNotes] = useRecoilState(notesState);

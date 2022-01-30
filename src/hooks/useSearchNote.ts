@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import notesState from '../store/notesState';
-import type NoteType from '../types/Note';
+import type NoteType from '../types/NoteType';
 
 const useSearchNote = () => {
   const [notes] = useRecoilState(notesState);

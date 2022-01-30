@@ -2,7 +2,6 @@ import React, { ReactElement, VFC } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Top from '../components/pages/Top/Top';
 import Login from '../components/pages/Login/Login';
-import Home from '../components/pages/Home/Home';
 import Note from '../components/pages/Note';
 import Mypage from '../components/pages/MyPage/MyPage';
 import Page404 from '../components/pages/Page404/Page404';
