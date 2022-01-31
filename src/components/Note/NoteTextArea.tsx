@@ -1,128 +1,68 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect, VFC } from 'react';
-import { useSetRecoilState } from 'recoil';
-import toast, { Toaster } from 'react-hot-toast';
-import { AiFillDelete, AiFillSave, AiOutlineConsoleSql } from 'react-icons/ai';
+import React, { useEffect, useRef, VFC } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { AiFillDelete, AiFillSave } from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
-import currentNoteState from '../../store/currentNoteState';
 import Button from '../Button/Button';
-import useNotes from '../../hooks/useNotes';
-import { createPutNoteInstance } from '../../libs/axiosInstance';
 import useApiRequests from '../../hooks/useApiRequests';
 import Loading from '../Loading/Loading';
+import NoteEmptyDisplay from './NoteEmptyDisplay';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
   notes: NoteType[];
   currentNote: NoteType;
-  setCurrentState: (note: NoteType) => void;
+
+  // 引数の型付けはしたいけど、unusedの警告が出てしまう。この警告って消せますか？
+  // eslint-disable-next-line no-unused-vars
+  updateCurrentNote: (note: NoteType) => void;
 };
 
 const NoteTextArea: VFC<Props> = (props) => {
-  const [isDummy, setIsDummy] = useState(false);
-  const { currentNote, setCurrentState, notes } = props;
+  const { currentNote, updateCurrentNote, notes } = props;
   const titleChangeHandler = useInputForm();
   const descriptionChangeHandler = useInputForm();
-  // const { notes } = useNotes();
-  const { putNote, deleteNote, isLoading } = useApiRequests();
+  const { saveNote, deleteNote, isLoading } = useApiRequests();
 
-  const checkNotes = () => {
-    if (notes.length > 0) setIsDummy(false);
-    else setIsDummy(true);
-  };
-  useEffect(() => {
-    checkNotes();
-  }, []);
+  // 追加/削除前のnotesの長さを保持する
+  const preNoteLength = useRef<number>(notes.length);
 
-  const saveNote = () => {
-    const newData: NoteType = {
-      id: currentNote.id,
-      title: titleChangeHandler.input,
-      category: undefined,
-      description: descriptionChangeHandler.input,
-      date: undefined,
-      mark_div: undefined,
-    };
-    putNote(newData);
-    console.log('putNote');
-    setCurrentState(newData);
+  // ノートが0の時に仮で入れておくnote
+  const dummyNote: NoteType = {
+    id: '-999',
+    title: 'dummyNote',
+    category: undefined,
+    description: '',
+    date: '',
+    mark_div: 0,
   };
 
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
-    console.log('koko');
-    console.log(currentNote);
     titleChangeHandler.initInput(currentNote.title);
     descriptionChangeHandler.initInput(currentNote.description);
   }, [currentNote]);
 
-  // console.log('render:tetxtArea');
-  const delNote = () => {
-    console.log('clickdelButton');
-    console.log(`Before:${notes.length}`);
-    deleteNote(currentNote);
-    console.log(`After:${notes.length}`);
-  };
-
-  // ノートを削除して、notesに変更があったらcurrentNoteを変更する
+  // noteが追加/削除された時にcurrentNoteを変更する。
   useEffect(() => {
-    // console.log('notes change');
-    // console.log(notes);
-    // console.log(notes[0]);
-
-    const dummyNote: NoteType = {
-      id: '-999',
-      title: 'dummyNote',
-      category: undefined,
-      description: 'これはダミーノートです',
-      date: '',
-      mark_div: 0,
-    };
-
-    if (notes.length > 0) {
-      setCurrentState(notes[0]);
-      setIsDummy(false);
-    } else {
-      setCurrentState(dummyNote);
-      setIsDummy(true);
+    // 削除されてた場合の判定
+    if (preNoteLength.current > notes.length) {
+      if (notes.length > 0) {
+        updateCurrentNote(notes[0]);
+      } else {
+        updateCurrentNote(dummyNote);
+      }
     }
-  }, [notes]);
-
-  // useEffect(() => {
-  //   console.log('getNote');
-  //   getNotes();
-  // }, [currentNote]);
-
-  // useEffect(() => {
-  //   titleChangeHandler.initInput(currentNote.title);
-  //   descriptionChangeHandler.initInput(currentNote.description);
-  // }, [currentNote]);
-
-  // useEffect(() => {
-  //   const newData: NoteType = {
-  //     id: currentNote.id,
-  //     title: titleChangeHandler.input,
-  //     category: undefined,
-  //     description: descriptionChangeHandler.input,
-  //     date: undefined,
-  //     mark_div: undefined,
-  //   };
-  //   console.log(newData);
-  //   // putNote(newData);
-  // }, [titleChangeHandler.input, descriptionChangeHandler.input]);
+    // 一つ前の状態を更新
+    preNoteLength.current = notes.length;
+  }, [notes.length]);
 
   return (
     <div className="bg-gray-900 w-full h-screen p-5 ">
       <Toaster position="top-right" reverseOrder={false} />
-
-      {/* <Button className="" buttonAction={saveNote}>
-    save
-  </Button> */}
       {isLoading ? (
         <Loading />
-      ) : isDummy ? (
-        <div> これはダミーです。新しいノートをつかしてください</div>
-      ) : (
+      ) : notes.length > 0 ? (
         <>
           <div className="h-full w-full ">
             <div className="w-full mb-5  flex">
@@ -139,14 +79,23 @@ const NoteTextArea: VFC<Props> = (props) => {
                 >
                   <AiFillDelete size="32" color="#4ade80" />
                 </Button>
-                <Button className="" buttonAction={saveNote}>
+                <Button
+                  className=""
+                  buttonAction={() =>
+                    saveNote(
+                      currentNote.id,
+                      titleChangeHandler.input,
+                      descriptionChangeHandler.input,
+                    )
+                  }
+                >
                   <AiFillSave size="32" color="#4ade80" />
                 </Button>
               </div>
             </div>
             <div className="h-5/6">
               <textarea
-                onChange={descriptionChangeHandler.onChangeTextArea}
+                onChange={descriptionChangeHandler.onChange}
                 value={descriptionChangeHandler.input}
                 className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-900 is-scroll-900  focus:outline-none"
                 placeholder="本文"
@@ -154,6 +103,10 @@ const NoteTextArea: VFC<Props> = (props) => {
             </div>
           </div>
         </>
+      ) : (
+        <div className="mt-40">
+          <NoteEmptyDisplay />
+        </div>
       )}
     </div>
   );

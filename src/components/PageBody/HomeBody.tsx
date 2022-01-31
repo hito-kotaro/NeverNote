@@ -1,6 +1,6 @@
 import React, { VFC } from 'react';
 import useResponsive from '../../hooks/useResponsive';
-import NoteWrap from '../Note/NoteWrap';
+import NoteHoriozonList from '../Note/NoteHoriozonList';
 import useNotes from '../../hooks/useNotes';
 
 type Props = {
@@ -24,14 +24,14 @@ const HomeBody: VFC<Props> = (props) => {
           </div>
           <div className="">
             <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
-              <NoteWrap
+              <NoteHoriozonList
                 isLoading={isLoading}
                 notes={notes}
                 wrapMsg="最近使用したノート"
               />
             </div>
             <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
-              <NoteWrap
+              <NoteHoriozonList
                 isLoading={isLoading}
                 notes={notes}
                 wrapMsg="最近削除したノート"

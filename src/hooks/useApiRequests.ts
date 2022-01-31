@@ -1,80 +1,57 @@
-/* eslint-disable consistent-return */
 import { useCallback, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 import { AxiosResponse } from 'axios';
-import {
-  createAxiosTokenInstance,
-  createPutNoteInstance,
-  createDeleteNoteInstance,
-} from '../libs/axiosInstance';
-import currentNoteState from '../store/currentNoteState';
-
+import { createAxiosTokenInstance } from '../libs/axiosInstance';
+import useCurreNote from './useCurrentNote';
 import useAuth from './useAuth';
 import useNotes from './useNotes';
+import useMypage from './useMyPage';
+import type NoteType from '../types/NoteType';
 
-import type Note from '../types/NoteType';
+// 新規登録用のtype
+type newNoteType = Omit<NoteType, 'id'>;
 
 const useApiRequests = () => {
-  // const [del, setDel] = useState(0);
-  const [currentNote, setCurrentState] = useRecoilState(currentNoteState);
+  const { setPageId } = useMypage();
+  const { updateCurrentNote } = useCurreNote();
   const { logout } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const { updateNotes, notes } = useNotes();
+  const { updateNotes } = useNotes();
 
   const axiosTokenInstance = createAxiosTokenInstance();
   const closeSettion = useCallback(() => {
     logout('再ログインしてください');
   }, []);
 
-  const getStatus = useCallback(async () => {
-    try {
-      await axiosTokenInstance.get('/memos');
-    } catch (error) {
-      closeSettion();
-    }
-  }, []);
-
+  // バックエンドからノートを取得してグローバルステートに格納
   const fetchNotes = useCallback(async () => {
-    // バックエンドからノートを取得してグローバルステートに格納
-    try {
-      setIsLoading(true);
-      const result: AxiosResponse = await axiosTokenInstance.get('/memos');
-      console.log(result.data);
-      // 取得が認証エラー(401)で失敗したらログアウト
-      if (result.status === 401) closeSettion();
-      updateNotes(result.data);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  const getNotes = useCallback(async () => {
     try {
       setIsLoading(true);
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
       updateNotes(result.data);
-      // console.log(result.data);
       setIsLoading(false);
     } catch (error) {
       closeSettion();
     }
-  }, [currentNote]);
+  }, []);
 
-  const postNote = useCallback(async (noteData: Note) => {
-    const testData = {
-      title: '今日の講義について',
-      category: '授業メモ',
-      description: '第９回の授業メモです\\nこんなことしました。',
-      date: '2021/08/01',
+  // 新規ノートを作成してノート画面を表示
+  const createNote = useCallback(async () => {
+    const today = dayjs().format('YYYY/MM/DD');
+    const newNote: newNoteType = {
+      title: 'Untitled',
+      category: undefined,
+      description: '',
+      date: today,
       mark_div: 0,
     };
-
     try {
       setIsLoading(true);
-      await axiosTokenInstance.post('/memo', testData);
-      getNotes();
+      const result = await axiosTokenInstance.post('/memo', newNote);
+      fetchNotes();
+      updateCurrentNote(result.data);
+      setPageId('note');
       setIsLoading(false);
       toast.success('新しいノートを追加しました');
     } catch (error) {
@@ -82,59 +59,47 @@ const useApiRequests = () => {
     }
   }, []);
 
-  const putNote = useCallback(async (noteData: Note) => {
-    if (noteData.id === '-999') {
-      console.log(noteData);
-      return;
-    }
-
-    const instance = createPutNoteInstance(noteData.id);
+  const deleteNote = useCallback(async (noteData: NoteType) => {
     try {
       setIsLoading(true);
-      console.log(noteData);
-      const result = await instance.put('', noteData);
-
+      await axiosTokenInstance.delete(`/memo/${noteData.id}`);
       fetchNotes();
-      console.log(result);
-      setCurrentState(noteData);
-      setIsLoading(false);
-      toast.success(`「${noteData.title}」を更新しました`);
-    } catch (error) {
-      closeSettion();
-      console.log(error);
-    }
-  }, []);
-
-  const deleteNote = useCallback(async (noteData: Note) => {
-    // console.log(noteData);
-    // if (noteData) {
-    if (noteData.id === '-999') {
-      console.log(noteData);
-      return;
-    }
-    const deleteInstance = createDeleteNoteInstance();
-    try {
-      setIsLoading(true);
-      const deleteResult = await deleteInstance.delete(noteData.id);
-      fetchNotes();
-      // setCurrentState(notes[0]);
-      console.log(deleteResult);
       setIsLoading(false);
       toast.success(`「${noteData.title}」を削除しました`);
     } catch (error) {
-      // closeSettion();
-      console.log(error);
+      closeSettion();
     }
-    // }
   }, []);
 
+  const saveNote = useCallback(
+    async (id: string, title: string, description: string) => {
+      const newData: NoteType = {
+        id,
+        title,
+        category: undefined,
+        description,
+        date: undefined,
+        mark_div: undefined,
+      };
+      try {
+        setIsLoading(true);
+        await axiosTokenInstance.put(`/memo/${id}`, newData);
+        fetchNotes();
+        updateCurrentNote(newData);
+        setIsLoading(false);
+        toast.success(`「${newData.title}」を更新しました`);
+      } catch (error) {
+        closeSettion();
+      }
+    },
+    [],
+  );
+
   return {
-    getNotes,
-    postNote,
-    getStatus,
     isLoading,
-    putNote,
+    createNote,
     deleteNote,
+    saveNote,
     fetchNotes,
   };
 };

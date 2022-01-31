@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import React, { VFC } from 'react';
 import NoteListItem from './NoteListItem';
 import Loading from '../Loading/Loading';
+import NoteEmptyDisplay from './NoteEmptyDisplay';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
@@ -9,7 +11,7 @@ type Props = {
   notes: NoteType[];
 };
 
-const NoteWrap: VFC<Props> = (props) => {
+const NoteHoriozonList: VFC<Props> = (props) => {
   const { isLoading, wrapMsg, notes } = props;
   return (
     <div className="">
@@ -19,13 +21,17 @@ const NoteWrap: VFC<Props> = (props) => {
           <div className=" mx-auto">
             <Loading />
           </div>
-        ) : (
+        ) : notes.length > 0 ? (
           notes.map((note: NoteType) => (
             <NoteListItem key={note.id} note={note} />
           ))
+        ) : (
+          <div className="flex w-full justify-center my-10">
+            <NoteEmptyDisplay />
+          </div>
         )}
       </div>
     </div>
   );
 };
-export default NoteWrap;
+export default NoteHoriozonList;

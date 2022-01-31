@@ -8,84 +8,72 @@ import {
   AiFillDelete,
 } from 'react-icons/ai';
 import { RiStickyNoteFill } from 'react-icons/ri';
-import { useRecoilState } from 'recoil';
-import pageIdState from '../../store/pageIdState';
-import SidebarCommonButton from './SidebarCommonButton';
-import SearchWindow from './Search/SearchWindow';
+import SidebarButton from './SidebarButton';
 import useApiRequests from '../../hooks/useApiRequests';
 import useSearchNote from '../../hooks/useSearchNote';
+import useMyPage from '../../hooks/useMyPage';
 
-const SidebarButtons = () => {
-  const [pageId, setPageId] = useRecoilState(pageIdState);
-  const { postNote } = useApiRequests();
+const SidebarButtonList = () => {
+  const { setPageId } = useMyPage();
+  const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
 
-  const dummy = () => {
-    console.log('click sidebar button');
-  };
+  const dummy = () => {};
+
   return (
     <>
       <hr className=" my-5 mx-2 sidebar-hr" />
-      <SidebarCommonButton
+      <SidebarButton
         balloonMsg="検索"
         buttonAction={toggelOpen}
         isOpen={isOpen}
-        openWindow={<SearchWindow />}
       >
         <AiOutlineSearch size="32" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
+      <SidebarButton
         balloonMsg="新しいノート"
-        buttonAction={postNote}
+        buttonAction={createNote}
         isOpen={false}
       >
         <AiOutlinePlus size="32" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
+      <SidebarButton
         balloonMsg="ホーム"
         buttonAction={() => setPageId('home')}
         isOpen={false}
       >
         <AiFillHome size="24" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
+      <SidebarButton
         balloonMsg="ノート"
         buttonAction={() => setPageId('note')}
         isOpen={false}
       >
         <RiStickyNoteFill size="24" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
+      <SidebarButton
         balloonMsg="お気に入り"
         buttonAction={dummy}
         isOpen={false}
       >
         <AiFillStar size="24" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
-        balloonMsg="タグ"
-        buttonAction={dummy}
-        isOpen={false}
-      >
+      <SidebarButton balloonMsg="タグ" buttonAction={dummy} isOpen={false}>
         <AiFillTags size="24" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
-      <SidebarCommonButton
-        balloonMsg="ゴミ箱"
-        buttonAction={dummy}
-        isOpen={false}
-      >
+      <SidebarButton balloonMsg="ゴミ箱" buttonAction={dummy} isOpen={false}>
         <AiFillDelete size="24" color="#4ade80" />
-      </SidebarCommonButton>
+      </SidebarButton>
 
       <hr className=" mx-2 sidebar-hr" />
     </>
   );
 };
 
-export default SidebarButtons;
+export default SidebarButtonList;

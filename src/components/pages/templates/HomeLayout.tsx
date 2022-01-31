@@ -6,22 +6,20 @@ type Props = {
   children: ReactElement;
 };
 
-const HomeTmplate: VFC<Props> = (props) => {
+const HomeLayout: VFC<Props> = (props) => {
   const { children } = props;
-  const { getNotes } = useApiRequests();
+  const { fetchNotes } = useApiRequests();
 
   useEffect(() => {
-    getNotes();
+    fetchNotes();
   }, []);
 
   return (
     <div className="flex h-full ">
       <Sidebar />
       {children}
-      {/* <div id="home-main" className="h-full w-full mx-auto bg-red-200">
-      </div> */}
     </div>
   );
 };
 
-export default HomeTmplate;
+export default HomeLayout;

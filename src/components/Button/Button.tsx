@@ -4,7 +4,7 @@ import { NavigateFunction } from 'react-router-dom';
 type Props = {
   children: any;
   className: string;
-  buttonAction?: () => void | Promise<void> | void | NavigateFunction;
+  buttonAction?: () => void | Promise<void> | NavigateFunction;
 };
 
 const Button: VFC<Props> = (props) => {

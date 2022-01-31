@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import notesState from '../store/notesState';
 import type NoteType from '../types/NoteType';

@@ -1,30 +1,27 @@
 import React, { VFC } from 'react';
-import { useRecoilState } from 'recoil';
-import currentNoteState from '../../store/currentNoteState';
 import useResponsive from '../../hooks/useResponsive';
-import NoteListVerticle from '../Note/NoteListVerticle';
+import useCurrentNote from '../../hooks/useCurrentNote';
 import useNotes from '../../hooks/useNotes';
-
+import NoteVerticalList from '../Note/NoteVerticalList';
 import NoteTextArea from '../Note/NoteTextArea';
 
 const NoteListBody: VFC = () => {
+  const { currentNote, updateCurrentNote } = useCurrentNote();
   const { query } = useResponsive();
-  const [currentNote, setCurrentState] = useRecoilState(currentNoteState);
   const { notes } = useNotes();
   return (
     <>
       {query.isLaptop ? (
         // <>
         <div className="flex w-full">
-          <NoteListVerticle />
+          <NoteVerticalList />
           <NoteTextArea
             notes={notes}
             currentNote={currentNote}
-            setCurrentState={setCurrentState}
+            updateCurrentNote={updateCurrentNote}
           />
         </div>
       ) : (
-        // </>
         // ここにスマホ用の記述
         ''
       )}

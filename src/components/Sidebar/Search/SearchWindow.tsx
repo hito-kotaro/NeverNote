@@ -3,8 +3,16 @@ import SearchForm from './SearchForm';
 import type NoteType from '../../../types/NoteType';
 import useSearchNote from '../../../hooks/useSearchNote';
 import useInputForm from '../../../hooks/useInputForm';
+import Button from '../../Button/Button';
+import useMyPage from '../../../hooks/useMyPage';
 
-const SearchWindow: VFC = () => {
+type Props = {
+  toggelOpen: () => void;
+};
+
+const SearchWindow: VFC<Props> = (props) => {
+  const { toggelOpen } = props;
+  const { clickNote } = useMyPage();
   const { searchedNotes, searchNote } = useSearchNote();
   const { onChange, input } = useInputForm();
 
@@ -12,8 +20,9 @@ const SearchWindow: VFC = () => {
     searchNote(input);
   }, [searchNote, input]);
 
-  const navigateNote = () => {
-    console.log('click');
+  const clickSeachResult = (note: NoteType) => {
+    clickNote(note, 'note');
+    toggelOpen();
   };
 
   return (
@@ -29,19 +38,16 @@ const SearchWindow: VFC = () => {
 
       {searchedNotes.map((note: NoteType) => {
         return (
-          <div
-            className="flex mt-5 bg-gray-700 rounded-md hover:bg-gray-500 p-2"
+          <Button
+            className="flex mt-5 w-full bg-gray-700 rounded-md hover:bg-gray-500 p-2"
             key={note.id}
-            role="button"
-            tabIndex={0}
-            onClick={navigateNote}
-            onKeyDown={navigateNote}
+            buttonAction={() => clickSeachResult(note)}
           >
             <div className="text-white font-bold overflow-x-hidden">
               {note.title}
             </div>
             <div className="text-white ml-auto">{note.date}</div>
-          </div>
+          </Button>
         );
       })}
     </div>
