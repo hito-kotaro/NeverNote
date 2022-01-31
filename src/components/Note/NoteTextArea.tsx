@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, VFC } from 'react';
-import { useRecoilState } from 'recoil';
-import { Toaster } from 'react-hot-toast';
+import { useSetRecoilState } from 'recoil';
+import toast, { Toaster } from 'react-hot-toast';
 import { AiFillDelete, AiFillSave, AiOutlineConsoleSql } from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
 import currentNoteState from '../../store/currentNoteState';
@@ -11,13 +12,27 @@ import useApiRequests from '../../hooks/useApiRequests';
 import Loading from '../Loading/Loading';
 import type NoteType from '../../types/NoteType';
 
-const NoteTextArea: VFC = () => {
-  const [currentNote, setCurrentState] = useRecoilState(currentNoteState);
+type Props = {
+  notes: NoteType[];
+  currentNote: NoteType;
+  setCurrentState: (note: NoteType) => void;
+};
+
+const NoteTextArea: VFC<Props> = (props) => {
+  const [isDummy, setIsDummy] = useState(false);
+  const { currentNote, setCurrentState, notes } = props;
   const titleChangeHandler = useInputForm();
   const descriptionChangeHandler = useInputForm();
-  const { notes } = useNotes();
-  const { putNote, deleteNote, getNotes, fetchNotes, isLoading } =
-    useApiRequests();
+  // const { notes } = useNotes();
+  const { putNote, deleteNote, isLoading } = useApiRequests();
+
+  const checkNotes = () => {
+    if (notes.length > 0) setIsDummy(false);
+    else setIsDummy(true);
+  };
+  useEffect(() => {
+    checkNotes();
+  }, []);
 
   const saveNote = () => {
     const newData: NoteType = {
@@ -36,6 +51,7 @@ const NoteTextArea: VFC = () => {
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
     console.log('koko');
+    console.log(currentNote);
     titleChangeHandler.initInput(currentNote.title);
     descriptionChangeHandler.initInput(currentNote.description);
   }, [currentNote]);
@@ -50,12 +66,27 @@ const NoteTextArea: VFC = () => {
 
   // ノートを削除して、notesに変更があったらcurrentNoteを変更する
   useEffect(() => {
-    console.log(notes);
-    console.log(notes[0]);
-    // console.log(`DelAfter:${notes[0].id}`);
-    setCurrentState(notes[0]);
-    // console.log(`set:${notes[0].title}`);
-  }, [notes.length]);
+    // console.log('notes change');
+    // console.log(notes);
+    // console.log(notes[0]);
+
+    const dummyNote: NoteType = {
+      id: '-999',
+      title: 'dummyNote',
+      category: undefined,
+      description: 'これはダミーノートです',
+      date: '',
+      mark_div: 0,
+    };
+
+    if (notes.length > 0) {
+      setCurrentState(notes[0]);
+      setIsDummy(false);
+    } else {
+      setCurrentState(dummyNote);
+      setIsDummy(true);
+    }
+  }, [notes]);
 
   // useEffect(() => {
   //   console.log('getNote');
@@ -89,6 +120,8 @@ const NoteTextArea: VFC = () => {
   </Button> */}
       {isLoading ? (
         <Loading />
+      ) : isDummy ? (
+        <div> これはダミーです。新しいノートをつかしてください</div>
       ) : (
         <>
           <div className="h-full w-full ">
@@ -100,7 +133,10 @@ const NoteTextArea: VFC = () => {
                 placeholder="タイトル"
               />
               <div className="flex w-1/3 justify-end">
-                <Button className="" buttonAction={delNote}>
+                <Button
+                  className=""
+                  buttonAction={() => deleteNote(currentNote)}
+                >
                   <AiFillDelete size="32" color="#4ade80" />
                 </Button>
                 <Button className="" buttonAction={saveNote}>

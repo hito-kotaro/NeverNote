@@ -16,6 +16,7 @@ import useNotes from './useNotes';
 import type Note from '../types/NoteType';
 
 const useApiRequests = () => {
+  // const [del, setDel] = useState(0);
   const [currentNote, setCurrentState] = useRecoilState(currentNoteState);
   const { logout } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -71,53 +72,60 @@ const useApiRequests = () => {
     };
 
     try {
+      setIsLoading(true);
       await axiosTokenInstance.post('/memo', testData);
       getNotes();
+      setIsLoading(false);
+      toast.success('新しいノートを追加しました');
     } catch (error) {
       closeSettion();
     }
   }, []);
 
   const putNote = useCallback(async (noteData: Note) => {
-    if (noteData) {
-      const instance = createPutNoteInstance(noteData.id);
+    if (noteData.id === '-999') {
+      console.log(noteData);
+      return;
+    }
 
-      try {
-        setIsLoading(true);
-        console.log(noteData);
-        const result = await instance.put('', noteData);
+    const instance = createPutNoteInstance(noteData.id);
+    try {
+      setIsLoading(true);
+      console.log(noteData);
+      const result = await instance.put('', noteData);
 
-        fetchNotes();
-        console.log(result);
-        setCurrentState(noteData);
-        setIsLoading(false);
-        toast.success(`「${noteData.title}」を更新しました`);
-      } catch (error) {
-        closeSettion();
-        console.log(error);
-      }
+      fetchNotes();
+      console.log(result);
+      setCurrentState(noteData);
+      setIsLoading(false);
+      toast.success(`「${noteData.title}」を更新しました`);
+    } catch (error) {
+      closeSettion();
+      console.log(error);
     }
   }, []);
 
   const deleteNote = useCallback(async (noteData: Note) => {
     // console.log(noteData);
-    if (noteData) {
-      console.log(`InstanceID:${noteData.id}`);
-      const deleteInstance = createDeleteNoteInstance();
-
-      try {
-        setIsLoading(true);
-        const deleteResult = await deleteInstance.delete(noteData.id);
-        getNotes();
-        setCurrentState(notes[0]);
-        console.log(deleteResult);
-        setIsLoading(false);
-        toast.success(`「${noteData.title}」を削除しました`);
-      } catch (error) {
-        // closeSettion();
-        console.log(error);
-      }
+    // if (noteData) {
+    if (noteData.id === '-999') {
+      console.log(noteData);
+      return;
     }
+    const deleteInstance = createDeleteNoteInstance();
+    try {
+      setIsLoading(true);
+      const deleteResult = await deleteInstance.delete(noteData.id);
+      fetchNotes();
+      // setCurrentState(notes[0]);
+      console.log(deleteResult);
+      setIsLoading(false);
+      toast.success(`「${noteData.title}」を削除しました`);
+    } catch (error) {
+      // closeSettion();
+      console.log(error);
+    }
+    // }
   }, []);
 
   return {

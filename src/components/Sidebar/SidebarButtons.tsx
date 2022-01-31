@@ -12,10 +12,12 @@ import { useRecoilState } from 'recoil';
 import pageIdState from '../../store/pageIdState';
 import SidebarCommonButton from './SidebarCommonButton';
 import SearchWindow from './Search/SearchWindow';
+import useApiRequests from '../../hooks/useApiRequests';
 import useSearchNote from '../../hooks/useSearchNote';
 
 const SidebarButtons = () => {
   const [pageId, setPageId] = useRecoilState(pageIdState);
+  const { postNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
 
   const dummy = () => {
@@ -35,7 +37,7 @@ const SidebarButtons = () => {
 
       <SidebarCommonButton
         balloonMsg="新しいノート"
-        buttonAction={() => setPageId('note')}
+        buttonAction={postNote}
         isOpen={false}
       >
         <AiOutlinePlus size="32" color="#4ade80" />
