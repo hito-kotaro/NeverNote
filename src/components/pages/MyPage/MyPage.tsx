@@ -15,13 +15,17 @@ const Mypage = () => {
     fetchNotes();
   }, []);
 
-  const getPage = () => {
-    // ページIDをローカルストレージから取得して、IDに対応したコンポーネントを返す
-    if (pageId === 'note') return <NoteBody />;
-    return <HomeBody isLoading={isLoading} />;
-  };
+  // const getPage = () => {
+  //   // ページIDをローカルストレージから取得して、IDに対応したコンポーネントを返す
+  //   if (pageId === 'note') return <NoteBody />;
+  //   return <HomeBody isLoading={isLoading} />;
+  // };
 
-  return <HomeLayout>{getPage()}</HomeLayout>;
+  return (
+    <HomeLayout>
+      {pageId === 'note' ? <NoteBody /> : <HomeBody isLoading={isLoading} />}
+    </HomeLayout>
+  );
 };
 
 export default Mypage;

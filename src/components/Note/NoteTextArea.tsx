@@ -12,9 +12,6 @@ import type NoteType from '../../types/NoteType';
 type Props = {
   notes: NoteType[];
   currentNote: NoteType;
-
-  // 引数の型付けはしたいけど、unusedの警告が出てしまう。この警告って消せますか？
-  // eslint-disable-next-line no-unused-vars
   updateCurrentNote: (note: NoteType) => void;
 };
 

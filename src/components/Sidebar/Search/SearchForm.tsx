@@ -3,7 +3,6 @@ import type NoteType from '../../../types/NoteType';
 
 type Props = {
   input: string;
-  // eslint-disable-next-line no-unused-vars
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   searchedNotes: NoteType[];
 };

@@ -3,7 +3,7 @@ import pageIdState from '../store/pageIdState';
 import useCurrentNote from './useCurrentNote';
 import type NoteType from '../types/NoteType';
 
-const usePageId = () => {
+const useMypage = () => {
   const { updateCurrentNote } = useCurrentNote();
   const [pageId, setPageId] = useRecoilState(pageIdState);
 
@@ -17,4 +17,4 @@ const usePageId = () => {
   return { clickNote, pageId, setPageId };
 };
 
-export default usePageId;
+export default useMypage;
