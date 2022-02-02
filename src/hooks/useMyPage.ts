@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import pageIdState from '../store/pageIdState';
+import { pageIdState } from '../store/pageIdState';
 import useCurrentNote from './useCurrentNote';
 import type NoteType from '../types/NoteType';
 

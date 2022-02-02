@@ -43,10 +43,12 @@ const SearchWindow: VFC<Props> = (props) => {
             key={note.id}
             buttonAction={() => clickSeachResult(note)}
           >
-            <div className="text-white font-bold overflow-x-hidden">
-              {note.title}
-            </div>
-            <div className="text-white ml-auto">{note.date}</div>
+            <>
+              <div className="text-white font-bold overflow-x-hidden">
+                {note.title}
+              </div>
+              <div className="text-white ml-auto">{note.date}</div>
+            </>
           </Button>
         );
       })}

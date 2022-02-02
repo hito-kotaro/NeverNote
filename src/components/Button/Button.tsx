@@ -1,8 +1,8 @@
-import React, { VFC } from 'react';
+import React, { ReactElement, VFC } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 
 type Props = {
-  children: any;
+  children: string | ReactElement;
   className: string;
   buttonAction?: () => void | Promise<void> | NavigateFunction;
 };

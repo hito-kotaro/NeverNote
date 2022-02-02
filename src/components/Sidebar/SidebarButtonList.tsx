@@ -18,7 +18,9 @@ const SidebarButtonList = () => {
   const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
 
-  const dummy = () => {};
+  const dummy = () => {
+    console.log('empty');
+  };
 
   return (
     <>

@@ -1,4 +1,5 @@
 import React, { VFC } from 'react';
+import { Helmet } from 'react-helmet-async';
 import useResponsive from '../../hooks/useResponsive';
 import NoteHoriozonList from '../Note/NoteHoriozonList';
 import useNotes from '../../hooks/useNotes';
@@ -15,6 +16,9 @@ const HomeBody: VFC<Props> = (props) => {
 
   return (
     <div id="home-main" className="h-full w-5/6 mx-auto">
+      <Helmet>
+        <title>ホーム -NeverNote</title>
+      </Helmet>
       {query.isLaptop ? (
         <div className="">
           <div className="flex justify-end mt-2">

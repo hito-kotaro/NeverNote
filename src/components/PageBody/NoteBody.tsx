@@ -1,4 +1,5 @@
 import React, { VFC } from 'react';
+import { Helmet } from 'react-helmet-async';
 import useResponsive from '../../hooks/useResponsive';
 import useCurrentNote from '../../hooks/useCurrentNote';
 import useNotes from '../../hooks/useNotes';
@@ -11,8 +12,10 @@ const NoteListBody: VFC = () => {
   const { notes } = useNotes();
   return (
     <>
+      <Helmet>
+        <title>ノート -NeverNote</title>
+      </Helmet>
       {query.isLaptop ? (
-        // <>
         <div className="flex w-full">
           <NoteVerticalList />
           <NoteTextArea

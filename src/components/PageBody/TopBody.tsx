@@ -8,8 +8,8 @@ import Button from '../Button/Button';
 const Body: VFC = () => {
   const { query } = useResponsive();
   const { blankAntion } = useAuth();
-  const subTitleStyles: string = 'mt-5 font-bold';
-  const buttonStyles: string =
+  const subTitleStyles = 'mt-5 font-bold';
+  const buttonStyles =
     'bg-green-600  text-white mt-10 py-3 px-10 font-semibold rounded-lg shadow-md focus:outline-none';
 
   return (
