@@ -1,60 +1,107 @@
-/* eslint-disable consistent-return */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import dayjs from 'dayjs';
+import toast from 'react-hot-toast';
 import { AxiosResponse } from 'axios';
 import { createAxiosTokenInstance } from '../libs/axiosInstance';
+import useCurreNote from './useCurrentNote';
 import useAuth from './useAuth';
-import type Note from '../types/Note';
+import useNotes from './useNotes';
+import useMypage from './useMyPage';
+import type NoteType from '../types/NoteType';
+
+// 新規登録用のtype
+type newNoteType = Omit<NoteType, 'id'>;
 
 const useApiRequests = () => {
+  const { setPageId } = useMypage();
+  const { updateCurrentNote } = useCurreNote();
   const { logout } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { updateNotes } = useNotes();
 
   const axiosTokenInstance = createAxiosTokenInstance();
   const closeSettion = useCallback(() => {
     logout('再ログインしてください');
   }, []);
 
-  const getStatus = useCallback(async () => {
+  // バックエンドからノートを取得してグローバルステートに格納
+  const fetchNotes = useCallback(async () => {
     try {
+      setIsLoading(true);
       const result: AxiosResponse = await axiosTokenInstance.get('/memos');
-      console.log(result.status);
+      updateNotes(result.data);
+      setIsLoading(false);
     } catch (error) {
       closeSettion();
     }
   }, []);
 
-  const getNotes = useCallback(async () => {
-    console.log(axiosTokenInstance);
-    axiosTokenInstance.interceptors.request.use((request) => {
-      console.log('Starting Request: ', request);
-      return request;
-    });
-
-    try {
-      const result: AxiosResponse = await axiosTokenInstance.get('/memos');
-      console.log(result.data);
-      return result;
-    } catch (error) {
-      closeSettion();
-    }
-  }, []);
-
-  const postNote = useCallback(async (noteData: Note) => {
-    const testData = {
-      title: '今日の講義について',
-      category: '授業メモ',
-      description: '第９回の授業メモです\\nこんなことしました。',
-      date: '2021/08/01',
-      mark_div: 1,
+  // 新規ノートを作成してノート画面を表示
+  const createNote = useCallback(async () => {
+    const today = dayjs().format('YYYY/MM/DD');
+    const newNote: newNoteType = {
+      title: 'Untitled',
+      category: undefined,
+      description: '',
+      date: today,
+      mark_div: 0,
     };
-
     try {
-      await axiosTokenInstance.post('/memo', testData);
-      getNotes();
+      setIsLoading(true);
+      const result = await axiosTokenInstance.post('/memo', newNote);
+      fetchNotes();
+      updateCurrentNote(result.data);
+      setPageId('note');
+      setIsLoading(false);
+      toast.success('新しいノートを追加しました');
     } catch (error) {
       closeSettion();
     }
   }, []);
 
-  return { getNotes, postNote, getStatus };
+  const deleteNote = useCallback(async (noteData: NoteType) => {
+    try {
+      setIsLoading(true);
+      await axiosTokenInstance.delete(`/memo/${noteData.id}`);
+      fetchNotes();
+      setIsLoading(false);
+      toast.success(`「${noteData.title}」を削除しました`);
+    } catch (error) {
+      closeSettion();
+    }
+  }, []);
+
+  const saveNote = useCallback(
+    async (id: string, title: string, description: string) => {
+      const newData: NoteType = {
+        id,
+        title,
+        category: undefined,
+        description,
+        date: undefined,
+        mark_div: undefined,
+      };
+      try {
+        setIsLoading(true);
+        await axiosTokenInstance.put(`/memo/${id}`, newData);
+        fetchNotes();
+        updateCurrentNote(newData);
+        setIsLoading(false);
+        toast.success(`「${newData.title}」を更新しました`);
+      } catch (error) {
+        closeSettion();
+      }
+    },
+    [],
+  );
+
+  return {
+    isLoading,
+    createNote,
+    deleteNote,
+    saveNote,
+    fetchNotes,
+  };
 };
+
 export default useApiRequests;

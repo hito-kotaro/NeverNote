@@ -1,4 +1,5 @@
 type Note = {
+  id: string;
   title: string;
   category: string | undefined;
   description: string | undefined;

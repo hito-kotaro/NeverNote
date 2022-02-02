@@ -3,13 +3,22 @@ import React, { useState, useCallback } from 'react';
 const useInputForm = () => {
   const [input, setInput] = useState('');
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setInput(e.target.value);
     },
-    [],
+    [input, setInput],
   );
-  return { onChange, input };
+
+  const initInput = (initData: string | undefined) => {
+    setInput(initData ?? '');
+  };
+
+  return {
+    input,
+    onChange,
+    initInput,
+  };
 };
 
 export default useInputForm;

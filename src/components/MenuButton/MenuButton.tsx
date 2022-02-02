@@ -33,7 +33,7 @@ const MenuButton: VFC<Props> = (props) => {
           <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {isAuth ? (
               <>
-                <MenuItemButton to="/home">ホーム画面へ</MenuItemButton>
+                <MenuItemButton to="/mypage">ホーム画面へ</MenuItemButton>
 
                 <Button
                   className="w-full hover:bg-green-500 hover:text-white text-gray-900

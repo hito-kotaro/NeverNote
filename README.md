@@ -15,5 +15,4 @@ $ yarn start
 
 TopPage: http://localhost:3000/  
 LoginPage: http://localhost:3000/login  
-HomePage: http://localhost:3000/home  
-NotePage: http://localhost:3000/note
+MyPage: http://localhost:3000/mypage

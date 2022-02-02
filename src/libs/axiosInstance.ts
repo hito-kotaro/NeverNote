@@ -15,8 +15,5 @@ export const createAxiosTokenInstance = () => {
       'Content-Type': 'application/json',
     },
   });
-
   return axiosTokenInstance;
 };
-
-// export default axiosInstance;
