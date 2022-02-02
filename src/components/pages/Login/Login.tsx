@@ -15,9 +15,9 @@ const Login = () => {
 
   const { isLoading, blankAntion, login } = useAuth();
 
-  const loginClassName: string =
+  const loginClassName =
     'mt-5 w-3/4 py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
-  const otherAuthClassName: string =
+  const otherAuthClassName =
     'border mt-5 w-3/4 py-2 px-4 text-gray-500 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75';
 
   return (

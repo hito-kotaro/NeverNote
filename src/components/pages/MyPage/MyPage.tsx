@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import pageIdState from '../../../store/pageIdState';
 import HomeLayout from '../templates/HomeLayout';
 import HomeBody from '../../PageBody/HomeBody';
 import NoteBody from '../../PageBody/NoteBody';
 import useApiRequests from '../../../hooks/useApiRequests';
+import useMypage from '../../../hooks/useMyPage';
 
 const Mypage = () => {
-  const [pageId] = useRecoilState(pageIdState);
+  const { pageId } = useMypage();
   const { fetchNotes, isLoading } = useApiRequests();
 
   useEffect(() => {
     // バックエンドからノートを取得してグローバルステートnotesに保存
-    fetchNotes();
+    void fetchNotes();
   }, []);
 
   // const getPage = () => {

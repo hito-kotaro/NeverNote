@@ -5,6 +5,9 @@ env:
 extends:
   - plugin:react/recommended
   - airbnb
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:import/typescript
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
   - prettier
@@ -26,14 +29,17 @@ parserOptions:
 plugins:
   - react
   - '@typescript-eslint'
+  - import
 rules:
   {
     'import/extensions': [1, { '.js', '.jsx', '.ts', '.tsx' }],
     'react/jsx-filename-extension':
       [2, { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
-    'no-unused-vars': 1,
     'react/function-component-definition': 0,
     'arrow-body-style': 0,
     'react/prop-types': 0,
     'react/jsx-no-useless-fragment': 0,
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 1,
+    'no-void': 0,
   }

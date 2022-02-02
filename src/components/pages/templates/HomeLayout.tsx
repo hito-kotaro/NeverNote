@@ -11,7 +11,7 @@ const HomeLayout: VFC<Props> = (props) => {
   const { fetchNotes } = useApiRequests();
 
   useEffect(() => {
-    fetchNotes();
+    void fetchNotes();
   }, []);
 
   return (

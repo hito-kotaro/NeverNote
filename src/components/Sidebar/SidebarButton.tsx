@@ -1,12 +1,12 @@
-import React, { VFC } from 'react';
+import React, { ReactElement, VFC } from 'react';
 import BalloonTemplate from './BalloonTemplate/BalloonTemplate';
 import Button from '../Button/Button';
 import SearchWindow from './Search/SearchWindow';
 
 type Props = {
   balloonMsg: string;
-  buttonAction: any;
-  children: any;
+  buttonAction: () => void;
+  children: ReactElement;
   isOpen: boolean;
 };
 

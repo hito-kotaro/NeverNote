@@ -28,7 +28,9 @@ const useApiRequests = () => {
   const fetchNotes = useCallback(async () => {
     try {
       setIsLoading(true);
-      const result: AxiosResponse = await axiosTokenInstance.get('/memos');
+      const result: AxiosResponse<NoteType[]> = await axiosTokenInstance.get(
+        '/memos',
+      );
       updateNotes(result.data);
       setIsLoading(false);
     } catch (error) {
@@ -48,8 +50,11 @@ const useApiRequests = () => {
     };
     try {
       setIsLoading(true);
-      const result = await axiosTokenInstance.post('/memo', newNote);
-      fetchNotes();
+      const result: AxiosResponse<NoteType> = await axiosTokenInstance.post(
+        '/memo',
+        newNote,
+      );
+      await fetchNotes();
       updateCurrentNote(result.data);
       setPageId('note');
       setIsLoading(false);
@@ -63,7 +68,7 @@ const useApiRequests = () => {
     try {
       setIsLoading(true);
       await axiosTokenInstance.delete(`/memo/${noteData.id}`);
-      fetchNotes();
+      await fetchNotes();
       setIsLoading(false);
       toast.success(`「${noteData.title}」を削除しました`);
     } catch (error) {
@@ -84,7 +89,7 @@ const useApiRequests = () => {
       try {
         setIsLoading(true);
         await axiosTokenInstance.put(`/memo/${id}`, newData);
-        fetchNotes();
+        await fetchNotes();
         updateCurrentNote(newData);
         setIsLoading(false);
         toast.success(`「${newData.title}」を更新しました`);
