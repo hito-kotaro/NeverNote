@@ -77,7 +77,11 @@ const useApiRequests = () => {
   }, []);
 
   const saveNote = useCallback(
-    async (id: string, title: string, description: string) => {
+    async (id: string, title: string, description: string | undefined) => {
+      if (title === '') {
+        return;
+      }
+
       const newData: NoteType = {
         id,
         title,
@@ -89,10 +93,9 @@ const useApiRequests = () => {
       try {
         setIsLoading(true);
         await axiosTokenInstance.put(`/memo/${id}`, newData);
+        setIsLoading(false);
         await fetchNotes();
         updateCurrentNote(newData);
-        setIsLoading(false);
-        toast.success(`「${newData.title}」を更新しました`);
       } catch (error) {
         closeSettion();
       }

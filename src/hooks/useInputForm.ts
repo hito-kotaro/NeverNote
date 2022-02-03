@@ -10,9 +10,12 @@ const useInputForm = () => {
     [input, setInput],
   );
 
-  const initInput = (initData: string | undefined) => {
-    setInput(initData ?? '');
-  };
+  const initInput = useCallback(
+    (initData: string | undefined) => {
+      setInput(initData ?? '');
+    },
+    [input],
+  );
 
   return {
     input,

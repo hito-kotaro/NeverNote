@@ -19,7 +19,7 @@ const NoteHoriozonList: VFC<Props> = (props) => {
       <div id="is-scroll" className="mt-3 mx-auto flex overflow-x-auto">
         {isLoading ? (
           <div className=" mx-auto">
-            <Loading />
+            <Loading hSize="h-20" wSize="w-20" />
           </div>
         ) : notes.length > 0 ? (
           notes.map((note: NoteType) => (
