@@ -7,6 +7,7 @@ import useInputForm from '../../hooks/useInputForm';
 import Button from '../Button/Button';
 import useApiRequests from '../../hooks/useApiRequests';
 import NoteEmptyDisplay from './NoteEmptyDisplay';
+import Loading from '../Loading/Loading';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
@@ -87,7 +88,7 @@ const NoteTextArea: VFC<Props> = (props) => {
                 </Button>
                 {isLoading ? (
                   <div className="h-8 w-8">
-                    <div className="mx-auto animate-spin h-8 w-8 border-8 border-gray-600 rounded-full border-t-transparent" />
+                    <Loading className="mx-auto animate-spin h-8 w-8 border-8 border-gray-600 rounded-full border-t-transparent" />
                   </div>
                 ) : (
                   <div className="bg-gray-900 h-8 w-8"> </div>
