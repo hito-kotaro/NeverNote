@@ -1,18 +1,36 @@
-import React, { VFC } from 'react';
+import React, { useEffect, VFC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useResponsive from '../../hooks/useResponsive';
 import NoteHoriozonList from '../Note/NoteHoriozonList';
 import useNotes from '../../hooks/useNotes';
+import type NoteType from '../../types/NoteType';
 
 type Props = {
+  notes: NoteType[];
   isLoading: boolean;
 };
 
 const HomeBody: VFC<Props> = (props) => {
-  const { isLoading } = props;
+  const { isLoading, notes } = props;
   const { query } = useResponsive();
-  const { notes } = useNotes();
+  const { updateCurrentNote } = useNotes();
   const userName = localStorage.getItem('userName');
+
+  useEffect(() => {
+    if (notes.length > 0) {
+      updateCurrentNote(notes[0]);
+    } else {
+      const dummyNote: NoteType = {
+        id: '-999',
+        title: 'dummyNote',
+        category: undefined,
+        description: '',
+        date: '',
+        mark_div: 0,
+      };
+      updateCurrentNote(dummyNote);
+    }
+  }, [notes]);
 
   return (
     <div id="home-main" className="h-full w-5/6 mx-auto">

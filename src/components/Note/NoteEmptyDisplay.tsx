@@ -9,7 +9,7 @@ const NoteEmptyDisplay = () => {
   return (
     <div className="text-center">
       {isLoading ? (
-        <Loading />
+        <Loading hSize="h-20" wSize="w-20" />
       ) : (
         <Button
           buttonAction={createNote}
