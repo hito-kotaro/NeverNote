@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import currentNotesState from '../store/currentNoteState';
 import notesState from '../store/notesState';
@@ -7,17 +8,23 @@ const useNotes = () => {
   const [notes, setNotes] = useRecoilState(notesState);
   const [currentNote, setCurrentNote] = useRecoilState(currentNotesState);
 
-  const updateNotes = (newNotes: Note[]) => {
-    setNotes(newNotes);
-  };
+  const updateNotes = useCallback(
+    (newNotes: Note[]) => {
+      setNotes(newNotes);
+    },
+    [notes],
+  );
 
   const getCurrentNote = () => {
     return currentNote;
   };
 
-  const updateCurrentNote = (note: Note) => {
-    setCurrentNote(note);
-  };
+  const updateCurrentNote = useCallback(
+    (note: Note) => {
+      setCurrentNote(note);
+    },
+    [currentNote],
+  );
 
   return { notes, updateNotes, getCurrentNote, updateCurrentNote };
 };

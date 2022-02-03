@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { VFC } from 'react';
 
-const Loading = () => {
+type Props = {
+  className: string;
+};
+
+const Loading: VFC<Props> = (props) => {
+  const { className } = props;
+
   return (
     <div className=" mx-auto">
-      <div className=" mx-auto animate-spin h-20 w-20 border-8 border-gray-600 rounded-full border-t-transparent" />
+      <div className={className} />
     </div>
   );
 };

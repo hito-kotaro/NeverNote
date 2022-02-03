@@ -9,7 +9,7 @@ const NoteEmptyDisplay = () => {
   return (
     <div className="text-center">
       {isLoading ? (
-        <Loading />
+        <Loading className="mx-auto animate-spin h-20  w-20 border-8 border-gray-600 rounded-full border-t-transparent" />
       ) : (
         <Button
           buttonAction={createNote}

@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, VFC } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { AiFillDelete, AiFillSave } from 'react-icons/ai';
+import { useDebounce } from 'use-debounce';
+import { AiFillDelete } from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
 import Button from '../Button/Button';
 import useApiRequests from '../../hooks/useApiRequests';
-import Loading from '../Loading/Loading';
 import NoteEmptyDisplay from './NoteEmptyDisplay';
+import Loading from '../Loading/Loading';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
@@ -20,6 +21,8 @@ const NoteTextArea: VFC<Props> = (props) => {
   const titleChangeHandler = useInputForm();
   const descriptionChangeHandler = useInputForm();
   const { saveNote, deleteNote, isLoading } = useApiRequests();
+  const [titleValue] = useDebounce(titleChangeHandler.input, 1000);
+  const [descriptionValue] = useDebounce(descriptionChangeHandler.input, 1000);
 
   // 追加/削除前のnotesの長さを保持する
   const preNoteLength = useRef<number>(notes.length);
@@ -33,6 +36,15 @@ const NoteTextArea: VFC<Props> = (props) => {
     date: '',
     mark_div: 0,
   };
+
+  // debounceを使ったオートセーブ 1秒入力がなかったら保存
+  useEffect(() => {
+    saveNote(
+      currentNote.id,
+      titleChangeHandler.input,
+      descriptionChangeHandler.input,
+    );
+  }, [descriptionValue, titleValue]);
 
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
@@ -57,9 +69,7 @@ const NoteTextArea: VFC<Props> = (props) => {
   return (
     <div className="bg-gray-900 w-full h-screen p-5 ">
       <Toaster position="top-right" reverseOrder={false} />
-      {isLoading ? (
-        <Loading />
-      ) : notes.length > 0 ? (
+      {notes.length > 0 ? (
         <>
           <div className="h-full w-full ">
             <div className="w-full mb-5  flex">
@@ -76,25 +86,20 @@ const NoteTextArea: VFC<Props> = (props) => {
                 >
                   <AiFillDelete size="32" color="#4ade80" />
                 </Button>
-                <Button
-                  className=""
-                  buttonAction={() =>
-                    saveNote(
-                      currentNote.id,
-                      titleChangeHandler.input,
-                      descriptionChangeHandler.input,
-                    )
-                  }
-                >
-                  <AiFillSave size="32" color="#4ade80" />
-                </Button>
+                {isLoading ? (
+                  <div className="h-8 w-8">
+                    <Loading className="mx-auto animate-spin h-8 w-8 border-8 border-gray-600 rounded-full border-t-transparent" />
+                  </div>
+                ) : (
+                  <div className="bg-gray-900 h-8 w-8"> </div>
+                )}
               </div>
             </div>
             <div className="h-5/6">
               <textarea
                 onChange={descriptionChangeHandler.onChange}
                 value={descriptionChangeHandler.input}
-                className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-900 is-scroll-900  focus:outline-none"
+                className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-800 is-scroll-900  focus:outline-none"
                 placeholder="本文"
               />
             </div>
