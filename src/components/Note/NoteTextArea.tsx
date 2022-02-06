@@ -39,7 +39,7 @@ const NoteTextArea: VFC<Props> = (props) => {
   const dummyNote: NoteType = {
     id: '-999',
     title: 'dummyNote',
-    category: undefined,
+    category: '未分類',
     description: '',
     date: '',
     mark_div: 0,
@@ -50,7 +50,7 @@ const NoteTextArea: VFC<Props> = (props) => {
     const newNote: NoteType = {
       id: currentNote.id,
       title: titleChangeHandler.input,
-      category: undefined,
+      category: '未分類',
       description: currentNote.description,
       date: dayjs().format('YYYY/MM/DD'),
       mark_div: newMark,
@@ -77,7 +77,7 @@ const NoteTextArea: VFC<Props> = (props) => {
     const newNote: NoteType = {
       id: currentNote.id,
       title: titleChangeHandler.input,
-      category: undefined,
+      category: '未分類',
       description: descriptionChangeHandler.input,
       date: dayjs().format('YYYY/MM/DD'),
       mark_div: currentNote.mark_div,
@@ -91,7 +91,7 @@ const NoteTextArea: VFC<Props> = (props) => {
     const newNote: NoteType = {
       id: currentNote.id,
       title: titleChangeHandler.input,
-      category: undefined,
+      category: '未分類',
       description: currentNote.description,
       date: dayjs().format('YYYY/MM/DD'),
       mark_div: currentNote.mark_div,

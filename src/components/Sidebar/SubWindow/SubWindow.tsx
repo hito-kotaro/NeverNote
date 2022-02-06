@@ -5,11 +5,12 @@ import type NoteType from '../../../types/NoteType';
 
 type Props = {
   notes: NoteType[];
+  windowTitle: string;
   toggleOpen: () => void;
 };
 
 const FavoritesWindow: VFC<Props> = (props) => {
-  const { notes, toggleOpen } = props;
+  const { notes, toggleOpen, windowTitle } = props;
   const { clickNote } = useMyPage();
 
   const clickFavoritResult = (note: NoteType) => {
@@ -22,7 +23,7 @@ const FavoritesWindow: VFC<Props> = (props) => {
       className="absolute rounded-md p-2  top-0 left-14  bg-gray-800 w-96 h-2/3 overflow-y-scroll drop-shadow-md"
       id="is-scroll"
     >
-      <div className="font-bold text-white">お気に入り</div>
+      <div className="font-bold text-white">{windowTitle}</div>
       {notes.map((note: NoteType) => {
         return (
           <Button

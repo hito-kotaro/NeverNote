@@ -23,7 +23,7 @@ const HomeBody: VFC<Props> = (props) => {
       const dummyNote: NoteType = {
         id: '-999',
         title: 'dummyNote',
-        category: undefined,
+        category: '未分類',
         description: '',
         date: '',
         mark_div: 0,

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import React from 'react';
 import {
   AiOutlineSearch,
@@ -24,6 +26,18 @@ const SidebarButtonList = () => {
   const { toggelOpen, isOpen } = useSearchNote();
   // const { subWindowIsOpen, toggleIsOpen } = useSubWindow();
   const favoritSubWindow = useSubWindow();
+  const tagsSubWindow = useSubWindow();
+  const categorys: string[] = notes.map((note: NoteType) => note.category);
+  const tags: (string | undefined)[] = [];
+
+  const initTags = () => {
+    categorys.map((item) => {
+      if (!tags.includes(item)) tags.push(item);
+    });
+  };
+
+  initTags();
+  console.log(tags);
 
   const dummy = () => {
     console.log('empty');
@@ -33,6 +47,20 @@ const SidebarButtonList = () => {
     return note.mark_div === 1;
   });
 
+  // categoryのみ取得
+  // const categorys = notes.map((note: NoteType) => note.category);
+  // console.log(categorys);
+  // // 重複していないタグのリストを取得
+  // const tmp: string[] = [];
+
+  // const test = () => {
+  //   categorys.map((item) => {
+  //     if (!tmp.includes(item)) return tmp.push(item);
+  //   });
+  // };
+
+  // test();
+  // console.log(tmp);
   return (
     <>
       <hr className=" my-5 mx-2 sidebar-hr" />
@@ -63,6 +91,7 @@ const SidebarButtonList = () => {
         isOpen={favoritSubWindow.subWindowIsOpen}
         openWindow={
           <SubWindow
+            windowTitle="お気に入り"
             notes={favoriteNotes}
             toggleOpen={favoritSubWindow.toggleIsOpen}
           />
@@ -71,10 +100,20 @@ const SidebarButtonList = () => {
         <AiFillStar size="24" color="#4ade80" />
       </SidebarButton>
 
-      <SidebarButton balloonMsg="タグ" buttonAction={dummy} isOpen={false}>
+      <SidebarButton
+        balloonMsg="タグ"
+        buttonAction={tagsSubWindow.toggleIsOpen}
+        isOpen={tagsSubWindow.subWindowIsOpen}
+        openWindow={
+          <SubWindow
+            windowTitle="タグ"
+            notes={favoriteNotes}
+            toggleOpen={favoritSubWindow.toggleIsOpen}
+          />
+        }
+      >
         <AiFillTags size="24" color="#4ade80" />
       </SidebarButton>
-
       <hr className=" mx-2 sidebar-hr" />
     </>
   );
