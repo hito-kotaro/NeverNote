@@ -1,7 +1,6 @@
 import React, { ReactElement, VFC } from 'react';
 import BalloonTemplate from './BalloonTemplate/BalloonTemplate';
 import Button from '../Button/Button';
-import SearchWindow from './Search/SearchWindow';
 
 type Props = {
   balloonMsg: string;

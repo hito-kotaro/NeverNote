@@ -3,7 +3,12 @@ import React, { useEffect, useRef, VFC } from 'react';
 import dayjs from 'dayjs';
 import { Toaster } from 'react-hot-toast';
 import { useDebounce } from 'use-debounce';
-import { AiFillDelete, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import {
+  AiFillDelete,
+  AiFillStar,
+  AiOutlineStar,
+  AiFillTags,
+} from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
 import Button from '../Button/Button';
 import useApiRequests from '../../hooks/useApiRequests';
@@ -21,9 +26,11 @@ const NoteTextArea: VFC<Props> = (props) => {
   const { currentNote, updateCurrentNote, notes } = props;
   const titleChangeHandler = useInputForm();
   const descriptionChangeHandler = useInputForm();
+  const tagChangeHandler = useInputForm();
   const { saveNote, deleteNote, isLoading } = useApiRequests();
   const [titleValue] = useDebounce(titleChangeHandler.input, 1000);
   const [descriptionValue] = useDebounce(descriptionChangeHandler.input, 1000);
+  const [tagValue] = useDebounce(tagChangeHandler.input, 1000);
 
   // 追加/削除前のnotesの長さを保持する
   const preNoteLength = useRef<number>(notes.length);
@@ -50,6 +57,20 @@ const NoteTextArea: VFC<Props> = (props) => {
     };
     saveNote(newNote);
   };
+
+  // tagが変更された時に更新
+  useEffect(() => {
+    const newNote: NoteType = {
+      id: currentNote.id,
+      title: titleChangeHandler.input,
+      category: tagChangeHandler.input,
+      description: descriptionChangeHandler.input,
+      date: dayjs().format('YYYY/MM/DD'),
+      mark_div: currentNote.mark_div,
+    };
+
+    saveNote(newNote);
+  }, [tagValue]);
 
   // 本文が変更された時に更新
   useEffect(() => {
@@ -82,6 +103,7 @@ const NoteTextArea: VFC<Props> = (props) => {
   useEffect(() => {
     titleChangeHandler.initInput(currentNote.title);
     descriptionChangeHandler.initInput(currentNote.description);
+    tagChangeHandler.initInput(currentNote.category);
   }, [currentNote]);
 
   // noteが追加/削除された時にcurrentNoteを変更する。
@@ -125,6 +147,7 @@ const NoteTextArea: VFC<Props> = (props) => {
                 className=" placeholder-white w-2/3 text-2xl bg-gray-900 text-white text-bold focus:outline-none "
                 placeholder="タイトル"
               />
+
               <div className="flex w-1/3 justify-end">
                 <div className="text-white font-bold">
                   {currentNote.mark_div}
@@ -161,6 +184,16 @@ const NoteTextArea: VFC<Props> = (props) => {
                 value={descriptionChangeHandler.input}
                 className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-900 is-scroll-900  focus:outline-none"
                 placeholder="本文"
+              />
+            </div>
+
+            <div className="inline-flex">
+              <AiFillTags size="24" color="#4ade80" />
+              <input
+                onChange={tagChangeHandler.onChange}
+                value={tagChangeHandler.input}
+                className=" placeholder-gray-200 w-2/3  bg-gray-900 text-white  focus:outline-none "
+                placeholder="タグ"
               />
             </div>
           </div>

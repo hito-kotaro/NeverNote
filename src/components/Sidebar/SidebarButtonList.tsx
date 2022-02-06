@@ -5,7 +5,6 @@ import {
   AiFillHome,
   AiFillStar,
   AiFillTags,
-  AiFillDelete,
 } from 'react-icons/ai';
 import { RiStickyNoteFill } from 'react-icons/ri';
 import SidebarButton from './SidebarButton';
@@ -25,14 +24,11 @@ const SidebarButtonList = () => {
   const { toggelOpen, isOpen } = useSearchNote();
   // const { subWindowIsOpen, toggleIsOpen } = useSubWindow();
   const favoritSubWindow = useSubWindow();
-  const deletedSubWindow = useSubWindow();
 
   const dummy = () => {
     console.log('empty');
   };
-  const deletedNotes = notes.filter((note: NoteType) => {
-    return note.mark_div === -1;
-  });
+
   const favoriteNotes = notes.filter((note: NoteType) => {
     return note.mark_div === 1;
   });

@@ -55,7 +55,6 @@ const useApiRequests = () => {
         newNote,
       );
       await fetchNotes();
-      console.log('create Note!');
       updateCurrentNote(result.data);
       setPageId('note');
       setIsLoading(false);
