@@ -17,7 +17,7 @@ const NoteListBody: VFC = () => {
       </Helmet>
       {query.isLaptop ? (
         <div className="flex w-full">
-          <NoteVerticalList />
+          <NoteVerticalList notes={notes} />
           <NoteTextArea
             notes={notes}
             currentNote={currentNote}

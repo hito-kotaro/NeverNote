@@ -12,19 +12,30 @@ import SidebarButton from './SidebarButton';
 import useApiRequests from '../../hooks/useApiRequests';
 import useSearchNote from '../../hooks/useSearchNote';
 import useMyPage from '../../hooks/useMyPage';
-import useFavoriteWindow from '../../hooks/useFavoriteWindow';
+import useSubWindow from '../../hooks/useSubWindow';
+import useNotes from '../../hooks/useNotes';
 import SearchWindow from './Search/SearchWindow';
-import FavoritesWindow from './Favorite/FavoritesWindow';
+import SubWindow from './SubWindow/SubWindow';
+import type NoteType from '../../types/NoteType';
 
 const SidebarButtonList = () => {
+  const { notes } = useNotes();
   const { setPageId } = useMyPage();
   const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
-  const { favoriteIsOpen, favoriteWindowToggleOpen } = useFavoriteWindow();
+  // const { subWindowIsOpen, toggleIsOpen } = useSubWindow();
+  const favoritSubWindow = useSubWindow();
+  const deletedSubWindow = useSubWindow();
 
   const dummy = () => {
     console.log('empty');
   };
+  const deletedNotes = notes.filter((note: NoteType) => {
+    return note.mark_div === -1;
+  });
+  const favoriteNotes = notes.filter((note: NoteType) => {
+    return note.mark_div === 1;
+  });
 
   return (
     <>
@@ -52,19 +63,20 @@ const SidebarButtonList = () => {
 
       <SidebarButton
         balloonMsg="お気に入り"
-        buttonAction={favoriteWindowToggleOpen}
-        isOpen={favoriteIsOpen}
-        openWindow={<FavoritesWindow toggleOpen={favoriteWindowToggleOpen} />}
+        buttonAction={favoritSubWindow.toggleIsOpen}
+        isOpen={favoritSubWindow.subWindowIsOpen}
+        openWindow={
+          <SubWindow
+            notes={favoriteNotes}
+            toggleOpen={favoritSubWindow.toggleIsOpen}
+          />
+        }
       >
         <AiFillStar size="24" color="#4ade80" />
       </SidebarButton>
 
       <SidebarButton balloonMsg="タグ" buttonAction={dummy} isOpen={false}>
         <AiFillTags size="24" color="#4ade80" />
-      </SidebarButton>
-
-      <SidebarButton balloonMsg="ゴミ箱" buttonAction={dummy} isOpen={false}>
-        <AiFillDelete size="24" color="#4ade80" />
       </SidebarButton>
 
       <hr className=" mx-2 sidebar-hr" />

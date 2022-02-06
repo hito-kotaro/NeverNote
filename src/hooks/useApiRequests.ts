@@ -55,6 +55,7 @@ const useApiRequests = () => {
         newNote,
       );
       await fetchNotes();
+      console.log('create Note!');
       updateCurrentNote(result.data);
       setPageId('note');
       setIsLoading(false);
@@ -80,15 +81,25 @@ const useApiRequests = () => {
     if (newNote.title === '') {
       return;
     }
-    try {
-      setIsLoading(true);
-      await axiosTokenInstance.put(`/memo/${newNote.id}`, newNote);
-      setIsLoading(false);
-      await fetchNotes();
-      updateCurrentNote(newNote);
-    } catch (error) {
-      closeSettion();
+
+    if (newNote.id === '-999') {
+      return;
     }
+    setIsLoading(true);
+    await axiosTokenInstance
+      .put(`/memo/${newNote.id}`, newNote)
+      .then(async () => {
+        setIsLoading(false);
+        await fetchNotes();
+        updateCurrentNote(newNote);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          closeSettion();
+        } else {
+          toast.error('サーバとの通信に失敗しました');
+        }
+      });
   }, []);
 
   return {
