@@ -27,7 +27,7 @@ const SearchWindow: VFC<Props> = (props) => {
 
   return (
     <div
-      className="absolute rounded-md p-2  top-10 left-16  bg-gray-800 w-96 h-2/3 overflow-y-scroll drop-shadow-md"
+      className="absolute rounded-md p-2  top-0 left-14  bg-gray-800 w-96 h-2/3 overflow-y-scroll drop-shadow-md"
       id="is-scroll"
     >
       <SearchForm

@@ -76,32 +76,20 @@ const useApiRequests = () => {
     }
   }, []);
 
-  const saveNote = useCallback(
-    async (id: string, title: string, description: string | undefined) => {
-      if (title === '') {
-        return;
-      }
-
-      const newData: NoteType = {
-        id,
-        title,
-        category: undefined,
-        description,
-        date: undefined,
-        mark_div: undefined,
-      };
-      try {
-        setIsLoading(true);
-        await axiosTokenInstance.put(`/memo/${id}`, newData);
-        setIsLoading(false);
-        await fetchNotes();
-        updateCurrentNote(newData);
-      } catch (error) {
-        closeSettion();
-      }
-    },
-    [],
-  );
+  const saveNote = useCallback(async (newNote: NoteType) => {
+    if (newNote.title === '') {
+      return;
+    }
+    try {
+      setIsLoading(true);
+      await axiosTokenInstance.put(`/memo/${newNote.id}`, newNote);
+      setIsLoading(false);
+      await fetchNotes();
+      updateCurrentNote(newNote);
+    } catch (error) {
+      closeSettion();
+    }
+  }, []);
 
   return {
     isLoading,

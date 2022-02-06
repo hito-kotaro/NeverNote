@@ -1,8 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, VFC } from 'react';
+import dayjs from 'dayjs';
 import { Toaster } from 'react-hot-toast';
 import { useDebounce } from 'use-debounce';
-import { AiFillDelete } from 'react-icons/ai';
+import { AiFillDelete, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import useInputForm from '../../hooks/useInputForm';
 import Button from '../Button/Button';
 import useApiRequests from '../../hooks/useApiRequests';
@@ -37,14 +38,45 @@ const NoteTextArea: VFC<Props> = (props) => {
     mark_div: 0,
   };
 
-  // debounceを使ったオートセーブ 1秒入力がなかったら保存
+  // 本文が変更された時に更新
   useEffect(() => {
-    saveNote(
-      currentNote.id,
-      titleChangeHandler.input,
-      descriptionChangeHandler.input,
-    );
-  }, [descriptionValue, titleValue]);
+    const newNote: NoteType = {
+      id: currentNote.id,
+      title: titleChangeHandler.input,
+      category: undefined,
+      description: descriptionChangeHandler.input,
+      date: dayjs().format('YYYY/MM/DD'),
+      mark_div: currentNote.mark_div,
+    };
+
+    saveNote(newNote);
+  }, [descriptionValue]);
+
+  // タイトルが変更された時に更新
+  useEffect(() => {
+    const newNote: NoteType = {
+      id: currentNote.id,
+      title: titleChangeHandler.input,
+      category: undefined,
+      description: currentNote.description,
+      date: dayjs().format('YYYY/MM/DD'),
+      mark_div: currentNote.mark_div,
+    };
+    saveNote(newNote);
+  }, [titleValue]);
+
+  // mark_divの更新
+  const toggleFavorite = (newMark: number) => {
+    const newNote: NoteType = {
+      id: currentNote.id,
+      title: titleChangeHandler.input,
+      category: undefined,
+      description: currentNote.description,
+      date: dayjs().format('YYYY/MM/DD'),
+      mark_div: newMark,
+    };
+    saveNote(newNote);
+  };
 
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
@@ -86,6 +118,17 @@ const NoteTextArea: VFC<Props> = (props) => {
                 >
                   <AiFillDelete size="32" color="#4ade80" />
                 </Button>
+
+                {currentNote.mark_div === 1 ? (
+                  <Button className="" buttonAction={() => toggleFavorite(0)}>
+                    <AiFillStar size="32" color="#4ade80" />
+                  </Button>
+                ) : (
+                  <Button className="" buttonAction={() => toggleFavorite(1)}>
+                    <AiOutlineStar size="32" color="#4ade80" />
+                  </Button>
+                )}
+
                 {isLoading ? (
                   <div className="h-8 w-8">
                     <Loading className="mx-auto animate-spin h-8 w-8 border-8 border-gray-600 rounded-full border-t-transparent" />
@@ -99,7 +142,7 @@ const NoteTextArea: VFC<Props> = (props) => {
               <textarea
                 onChange={descriptionChangeHandler.onChange}
                 value={descriptionChangeHandler.input}
-                className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-800 is-scroll-900  focus:outline-none"
+                className="text-white placeholder-white w-full h-full overflow-y-scroll is-scroll-900 resize-none bg-gray-900 is-scroll-900  focus:outline-none"
                 placeholder="本文"
               />
             </div>
