@@ -2,7 +2,6 @@
 import React, { VFC } from 'react';
 import NoteListItem from './NoteListItem';
 import Loading from '../Loading/Loading';
-import NoteEmptyDisplay from './NoteEmptyDisplay';
 import type NoteType from '../../types/NoteType';
 
 type Props = {

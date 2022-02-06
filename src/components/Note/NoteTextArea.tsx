@@ -38,6 +38,19 @@ const NoteTextArea: VFC<Props> = (props) => {
     mark_div: 0,
   };
 
+  // mark_divの更新
+  const changeMark = (newMark: number) => {
+    const newNote: NoteType = {
+      id: currentNote.id,
+      title: titleChangeHandler.input,
+      category: undefined,
+      description: currentNote.description,
+      date: dayjs().format('YYYY/MM/DD'),
+      mark_div: newMark,
+    };
+    saveNote(newNote);
+  };
+
   // 本文が変更された時に更新
   useEffect(() => {
     const newNote: NoteType = {
@@ -65,19 +78,6 @@ const NoteTextArea: VFC<Props> = (props) => {
     saveNote(newNote);
   }, [titleValue]);
 
-  // mark_divの更新
-  const toggleFavorite = (newMark: number) => {
-    const newNote: NoteType = {
-      id: currentNote.id,
-      title: titleChangeHandler.input,
-      category: undefined,
-      description: currentNote.description,
-      date: dayjs().format('YYYY/MM/DD'),
-      mark_div: newMark,
-    };
-    saveNote(newNote);
-  };
-
   // currentNoteが更新されたらテキストエリアを初期化
   useEffect(() => {
     titleChangeHandler.initInput(currentNote.title);
@@ -98,6 +98,20 @@ const NoteTextArea: VFC<Props> = (props) => {
     preNoteLength.current = notes.length;
   }, [notes.length]);
 
+  // mark_divが-1になった時に、VerticleListから削除する
+  useEffect(() => {
+    // 削除されてた場合の判定
+    if (preNoteLength.current > notes.length) {
+      if (notes.length > 0) {
+        updateCurrentNote(notes[0]);
+      } else {
+        updateCurrentNote(dummyNote);
+      }
+    }
+    // 一つ前の状態を更新
+    preNoteLength.current = notes.length;
+  }, [currentNote.mark_div]);
+
   return (
     <div className="bg-gray-900 w-full h-screen p-5 ">
       <Toaster position="top-right" reverseOrder={false} />
@@ -112,6 +126,9 @@ const NoteTextArea: VFC<Props> = (props) => {
                 placeholder="タイトル"
               />
               <div className="flex w-1/3 justify-end">
+                <div className="text-white font-bold">
+                  {currentNote.mark_div}
+                </div>
                 <Button
                   className=""
                   buttonAction={() => deleteNote(currentNote)}
@@ -120,11 +137,11 @@ const NoteTextArea: VFC<Props> = (props) => {
                 </Button>
 
                 {currentNote.mark_div === 1 ? (
-                  <Button className="" buttonAction={() => toggleFavorite(0)}>
+                  <Button className="" buttonAction={() => changeMark(0)}>
                     <AiFillStar size="32" color="#4ade80" />
                   </Button>
                 ) : (
-                  <Button className="" buttonAction={() => toggleFavorite(1)}>
+                  <Button className="" buttonAction={() => changeMark(1)}>
                     <AiOutlineStar size="32" color="#4ade80" />
                   </Button>
                 )}

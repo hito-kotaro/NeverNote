@@ -54,13 +54,6 @@ const HomeBody: VFC<Props> = (props) => {
                 wrapMsg="お気に入りノート"
               />
             </div>
-            <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
-              <NoteHoriozonList
-                isLoading={isLoading}
-                notes={notes}
-                wrapMsg="最近削除したノート"
-              />
-            </div>
           </div>
         </div>
       ) : (
