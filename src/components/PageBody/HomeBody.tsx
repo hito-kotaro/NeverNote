@@ -48,8 +48,10 @@ const HomeBody: VFC<Props> = (props) => {
             <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
               <NoteHoriozonList
                 isLoading={isLoading}
-                notes={notes}
-                wrapMsg="最近使用したノート"
+                notes={notes.filter((note: NoteType) => {
+                  return note.mark_div === 1;
+                })}
+                wrapMsg="お気に入りノート"
               />
             </div>
             <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
