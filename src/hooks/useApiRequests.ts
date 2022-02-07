@@ -43,7 +43,7 @@ const useApiRequests = () => {
     const today = dayjs().format('YYYY/MM/DD');
     const newNote: newNoteType = {
       title: 'Untitled',
-      category: undefined,
+      category: '未分類',
       description: '',
       date: today,
       mark_div: 0,
@@ -55,7 +55,6 @@ const useApiRequests = () => {
         newNote,
       );
       await fetchNotes();
-      console.log('create Note!');
       updateCurrentNote(result.data);
       setPageId('note');
       setIsLoading(false);

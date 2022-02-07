@@ -1,11 +1,12 @@
-import React from 'react';
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
+import React, { VFC } from 'react';
 import {
   AiOutlineSearch,
   AiOutlinePlus,
   AiFillHome,
   AiFillStar,
   AiFillTags,
-  AiFillDelete,
 } from 'react-icons/ai';
 import { RiStickyNoteFill } from 'react-icons/ri';
 import SidebarButton from './SidebarButton';
@@ -14,28 +15,38 @@ import useSearchNote from '../../hooks/useSearchNote';
 import useMyPage from '../../hooks/useMyPage';
 import useSubWindow from '../../hooks/useSubWindow';
 import useNotes from '../../hooks/useNotes';
+import useTagWindow from '../../hooks/useTagWindow';
 import SearchWindow from './Search/SearchWindow';
 import SubWindow from './SubWindow/SubWindow';
+import TagsWindow from './TagsWindow/TagsWindow';
 import type NoteType from '../../types/NoteType';
 
-const SidebarButtonList = () => {
+type Props = {
+  tag: string | undefined;
+  updateTag: (tagName: string) => void;
+};
+
+const SidebarButtonList: VFC<Props> = (props) => {
+  const { tag, updateTag } = props;
   const { notes } = useNotes();
   const { setPageId } = useMyPage();
   const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
-  // const { subWindowIsOpen, toggleIsOpen } = useSubWindow();
+  const tagWindow = useTagWindow();
   const favoritSubWindow = useSubWindow();
-  const deletedSubWindow = useSubWindow();
+  const categorys: string[] = notes.map((note: NoteType) => note.category);
+  const tags: string[] = [];
 
-  const dummy = () => {
-    console.log('empty');
+  const initTags = () => {
+    categorys.map((item) => {
+      if (!tags.includes(item)) tags.push(item);
+    });
   };
-  const deletedNotes = notes.filter((note: NoteType) => {
-    return note.mark_div === -1;
-  });
+
   const favoriteNotes = notes.filter((note: NoteType) => {
     return note.mark_div === 1;
   });
+  initTags();
 
   return (
     <>
@@ -67,6 +78,7 @@ const SidebarButtonList = () => {
         isOpen={favoritSubWindow.subWindowIsOpen}
         openWindow={
           <SubWindow
+            windowTitle="お気に入り"
             notes={favoriteNotes}
             toggleOpen={favoritSubWindow.toggleIsOpen}
           />
@@ -75,10 +87,23 @@ const SidebarButtonList = () => {
         <AiFillStar size="24" color="#4ade80" />
       </SidebarButton>
 
-      <SidebarButton balloonMsg="タグ" buttonAction={dummy} isOpen={false}>
+      <SidebarButton
+        balloonMsg="タグ"
+        buttonAction={tagWindow.toggleIsOpen}
+        isOpen={tagWindow.isOpen}
+        openWindow={
+          <TagsWindow
+            tag={tag}
+            updateTag={updateTag}
+            notes={notes}
+            windowTitle="タグ"
+            tags={tags}
+            toggleOpen={tagWindow.toggleIsOpen}
+          />
+        }
+      >
         <AiFillTags size="24" color="#4ade80" />
       </SidebarButton>
-
       <hr className=" mx-2 sidebar-hr" />
     </>
   );
