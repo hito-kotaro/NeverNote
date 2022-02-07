@@ -2,14 +2,19 @@ import React, { VFC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useResponsive from '../../hooks/useResponsive';
 import useCurrentNote from '../../hooks/useCurrentNote';
-import useNotes from '../../hooks/useNotes';
 import NoteVerticalList from '../Note/NoteVerticalList';
 import NoteTextArea from '../Note/NoteTextArea';
 
-const NoteListBody: VFC = () => {
+import type NoteType from '../../types/NoteType';
+
+type Props = {
+  notes: NoteType[];
+};
+
+const NoteListBody: VFC<Props> = (props) => {
+  const { notes } = props;
   const { currentNote, updateCurrentNote } = useCurrentNote();
   const { query } = useResponsive();
-  const { notes } = useNotes();
   return (
     <>
       <Helmet>

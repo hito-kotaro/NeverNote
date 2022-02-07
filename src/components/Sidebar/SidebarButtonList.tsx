@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import React from 'react';
+import React, { VFC } from 'react';
 import {
   AiOutlineSearch,
   AiOutlinePlus,
@@ -15,20 +15,27 @@ import useSearchNote from '../../hooks/useSearchNote';
 import useMyPage from '../../hooks/useMyPage';
 import useSubWindow from '../../hooks/useSubWindow';
 import useNotes from '../../hooks/useNotes';
+import useTagWindow from '../../hooks/useTagWindow';
 import SearchWindow from './Search/SearchWindow';
 import SubWindow from './SubWindow/SubWindow';
+import TagsWindow from './TagsWindow/TagsWindow';
 import type NoteType from '../../types/NoteType';
 
-const SidebarButtonList = () => {
+type Props = {
+  tag: string | undefined;
+  updateTag: (tagName: string) => void;
+};
+
+const SidebarButtonList: VFC<Props> = (props) => {
+  const { tag, updateTag } = props;
   const { notes } = useNotes();
   const { setPageId } = useMyPage();
   const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
-  // const { subWindowIsOpen, toggleIsOpen } = useSubWindow();
+  const tagWindow = useTagWindow();
   const favoritSubWindow = useSubWindow();
-  const tagsSubWindow = useSubWindow();
   const categorys: string[] = notes.map((note: NoteType) => note.category);
-  const tags: (string | undefined)[] = [];
+  const tags: string[] = [];
 
   const initTags = () => {
     categorys.map((item) => {
@@ -36,31 +43,11 @@ const SidebarButtonList = () => {
     });
   };
 
-  initTags();
-  console.log(tags);
-
-  const dummy = () => {
-    console.log('empty');
-  };
-
   const favoriteNotes = notes.filter((note: NoteType) => {
     return note.mark_div === 1;
   });
+  initTags();
 
-  // categoryのみ取得
-  // const categorys = notes.map((note: NoteType) => note.category);
-  // console.log(categorys);
-  // // 重複していないタグのリストを取得
-  // const tmp: string[] = [];
-
-  // const test = () => {
-  //   categorys.map((item) => {
-  //     if (!tmp.includes(item)) return tmp.push(item);
-  //   });
-  // };
-
-  // test();
-  // console.log(tmp);
   return (
     <>
       <hr className=" my-5 mx-2 sidebar-hr" />
@@ -102,13 +89,16 @@ const SidebarButtonList = () => {
 
       <SidebarButton
         balloonMsg="タグ"
-        buttonAction={tagsSubWindow.toggleIsOpen}
-        isOpen={tagsSubWindow.subWindowIsOpen}
+        buttonAction={tagWindow.toggleIsOpen}
+        isOpen={tagWindow.isOpen}
         openWindow={
-          <SubWindow
+          <TagsWindow
+            tag={tag}
+            updateTag={updateTag}
+            notes={notes}
             windowTitle="タグ"
-            notes={favoriteNotes}
-            toggleOpen={favoritSubWindow.toggleIsOpen}
+            tags={tags}
+            toggleOpen={tagWindow.toggleIsOpen}
           />
         }
       >
