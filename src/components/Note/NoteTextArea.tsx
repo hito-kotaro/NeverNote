@@ -120,20 +120,6 @@ const NoteTextArea: VFC<Props> = (props) => {
     preNoteLength.current = notes.length;
   }, [notes.length]);
 
-  // mark_divが-1になった時に、VerticleListから削除する
-  useEffect(() => {
-    // 削除されてた場合の判定
-    if (preNoteLength.current > notes.length) {
-      if (notes.length > 0) {
-        updateCurrentNote(notes[0]);
-      } else {
-        updateCurrentNote(dummyNote);
-      }
-    }
-    // 一つ前の状態を更新
-    preNoteLength.current = notes.length;
-  }, [currentNote.mark_div]);
-
   return (
     <div className="bg-gray-900 w-full h-screen p-5 ">
       <Toaster position="top-right" reverseOrder={false} />
@@ -149,9 +135,6 @@ const NoteTextArea: VFC<Props> = (props) => {
               />
 
               <div className="flex w-1/3 justify-end">
-                <div className="text-white font-bold">
-                  {currentNote.mark_div}
-                </div>
                 <Button
                   className=""
                   buttonAction={() => deleteNote(currentNote)}
