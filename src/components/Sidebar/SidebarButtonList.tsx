@@ -15,38 +15,38 @@ import useSearchNote from '../../hooks/useSearchNote';
 import useMyPage from '../../hooks/useMyPage';
 import useSubWindow from '../../hooks/useSubWindow';
 import useNotes from '../../hooks/useNotes';
-import useTagWindow from '../../hooks/useTagWindow';
+import useCategoryWindow from '../../hooks/useCategoryWindow';
 import SearchWindow from './Search/SearchWindow';
 import SubWindow from './SubWindow/SubWindow';
-import TagsWindow from './TagsWindow/TagsWindow';
+import CategoryWindow from './CategoryWindow/CategoryWindow';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
-  tag: string | undefined;
-  updateTag: (tagName: string) => void;
+  updateCategory: (categoryName: string) => void;
 };
 
 const SidebarButtonList: VFC<Props> = (props) => {
-  const { tag, updateTag } = props;
+  const { updateCategory } = props;
   const { notes } = useNotes();
   const { setPageId } = useMyPage();
   const { createNote } = useApiRequests();
   const { toggelOpen, isOpen } = useSearchNote();
-  const tagWindow = useTagWindow();
+  const categoryWindow = useCategoryWindow();
   const favoritSubWindow = useSubWindow();
-  const categorys: string[] = notes.map((note: NoteType) => note.category);
-  const tags: string[] = [];
+  const tmpCategorys: string[] = notes.map((note: NoteType) => note.category);
+  const categories: string[] = [];
 
-  const initTags = () => {
-    categorys.map((item) => {
-      if (!tags.includes(item)) tags.push(item);
+  const initCategories = () => {
+    tmpCategorys.map((item) => {
+      if (!categories.includes(item)) categories.push(item);
     });
   };
 
   const favoriteNotes = notes.filter((note: NoteType) => {
     return note.mark_div === 1;
   });
-  initTags();
+
+  initCategories();
 
   return (
     <>
@@ -89,16 +89,15 @@ const SidebarButtonList: VFC<Props> = (props) => {
 
       <SidebarButton
         balloonMsg="タグ"
-        buttonAction={tagWindow.toggleIsOpen}
-        isOpen={tagWindow.isOpen}
+        buttonAction={categoryWindow.toggleIsOpen}
+        isOpen={categoryWindow.isOpen}
         openWindow={
-          <TagsWindow
-            tag={tag}
-            updateTag={updateTag}
+          <CategoryWindow
+            updateCategory={updateCategory}
             notes={notes}
             windowTitle="タグ"
-            tags={tags}
-            toggleOpen={tagWindow.toggleIsOpen}
+            categories={categories}
+            toggleOpen={categoryWindow.toggleIsOpen}
           />
         }
       >

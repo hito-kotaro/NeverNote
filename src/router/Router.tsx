@@ -7,6 +7,7 @@ import Page404 from '../components/pages/Page404/Page404';
 import useAuth from '../hooks/useAuth';
 
 const Router: VFC = (): ReactElement => {
+  // ユーザーの認証状態を取得する関数
   const { fetchAuth } = useAuth();
   return (
     <Routes>
@@ -15,18 +16,6 @@ const Router: VFC = (): ReactElement => {
         path="/login"
         element={fetchAuth() ? <Navigate to="/mypage" /> : <Login />}
       />
-      {/* <Route
-        path="/home"
-        element={
-          fetchAuth() ? (
-            <div className="bg-gray-900">
-              <Home />
-            </div>
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      /> */}
       <Route
         path="/mypage"
         element={

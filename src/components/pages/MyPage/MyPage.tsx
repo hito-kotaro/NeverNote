@@ -6,27 +6,28 @@ import NoteBody from '../../PageBody/NoteBody';
 import useApiRequests from '../../../hooks/useApiRequests';
 import useMypage from '../../../hooks/useMyPage';
 import useNotes from '../../../hooks/useNotes';
-import useTag from '../../../hooks/useTag';
+import useCategory from '../../../hooks/useCategory';
 import type NoteType from '../../../types/NoteType';
 
 const Mypage = () => {
   const { pageId } = useMypage();
   const { fetchNotes, isLoading } = useApiRequests();
   const { notes } = useNotes();
-  const { tag, updateTag } = useTag();
+  const { category, updateCategory } = useCategory();
+
   useEffect(() => {
     // バックエンドからノートを取得してグローバルステートnotesに保存
     void fetchNotes();
   }, []);
 
   return (
-    <HomeLayout tag={tag} updateTag={updateTag}>
+    <HomeLayout updateCategory={updateCategory}>
       {pageId === 'note' ? (
         <NoteBody notes={notes} />
-      ) : pageId === 'tags' ? (
+      ) : pageId === 'category' ? (
         <NoteBody
           notes={notes.filter((note: NoteType) => {
-            return note.category === tag;
+            return note.category === category;
           })}
         />
       ) : (

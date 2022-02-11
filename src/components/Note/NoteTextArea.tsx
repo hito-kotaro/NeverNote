@@ -26,11 +26,11 @@ const NoteTextArea: VFC<Props> = (props) => {
   const { currentNote, updateCurrentNote, notes } = props;
   const titleChangeHandler = useInputForm();
   const descriptionChangeHandler = useInputForm();
-  const tagChangeHandler = useInputForm();
+  const categoryChangeHandler = useInputForm();
   const { saveNote, deleteNote, isLoading } = useApiRequests();
   const [titleValue] = useDebounce(titleChangeHandler.input, 1000);
   const [descriptionValue] = useDebounce(descriptionChangeHandler.input, 1000);
-  const [tagValue] = useDebounce(tagChangeHandler.input, 1000);
+  const [categoryValue] = useDebounce(categoryChangeHandler.input, 1000);
 
   // 追加/削除前のnotesの長さを保持する
   const preNoteLength = useRef<number>(notes.length);
@@ -58,19 +58,19 @@ const NoteTextArea: VFC<Props> = (props) => {
     saveNote(newNote);
   };
 
-  // tagが変更された時に更新
+  // categoryが変更された時に更新
   useEffect(() => {
     const newNote: NoteType = {
       id: currentNote.id,
       title: titleChangeHandler.input,
-      category: tagChangeHandler.input,
+      category: categoryChangeHandler.input,
       description: descriptionChangeHandler.input,
       date: dayjs().format('YYYY/MM/DD'),
       mark_div: currentNote.mark_div,
     };
 
     saveNote(newNote);
-  }, [tagValue]);
+  }, [categoryValue]);
 
   // 本文が変更された時に更新
   useEffect(() => {
@@ -103,7 +103,7 @@ const NoteTextArea: VFC<Props> = (props) => {
   useEffect(() => {
     titleChangeHandler.initInput(currentNote.title);
     descriptionChangeHandler.initInput(currentNote.description);
-    tagChangeHandler.initInput(currentNote.category);
+    categoryChangeHandler.initInput(currentNote.category);
   }, [currentNote]);
 
   // noteが追加/削除された時にcurrentNoteを変更する。
@@ -173,8 +173,8 @@ const NoteTextArea: VFC<Props> = (props) => {
             <div className="inline-flex">
               <AiFillTags size="24" color="#4ade80" />
               <input
-                onChange={tagChangeHandler.onChange}
-                value={tagChangeHandler.input}
+                onChange={categoryChangeHandler.onChange}
+                value={categoryChangeHandler.input}
                 className=" placeholder-gray-200 w-2/3  bg-gray-900 text-white  focus:outline-none "
                 placeholder="タグ"
               />

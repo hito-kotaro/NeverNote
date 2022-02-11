@@ -2,14 +2,13 @@ import React, { VFC } from 'react';
 import SidebarButtonList from '../Sidebar/SidebarButtonList';
 
 type Props = {
-  tag: string | undefined;
-  updateTag: (tagName: string) => void;
+  updateCategory: (categoryName: string) => void;
 };
 const Sidebar: VFC<Props> = (props) => {
-  const { tag, updateTag } = props;
+  const { updateCategory } = props;
   return (
     <div id="sidebar" className="sticky top-0 bg-gray-800 h-screen z-50">
-      <SidebarButtonList tag={tag} updateTag={updateTag} />
+      <SidebarButtonList updateCategory={updateCategory} />
     </div>
   );
 };

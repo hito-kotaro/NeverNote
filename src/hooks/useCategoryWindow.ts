@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-const useTagWindow = () => {
+const useCategoryWindow = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = useCallback(() => {
@@ -10,4 +10,4 @@ const useTagWindow = () => {
   return { toggleIsOpen, isOpen };
 };
 
-export default useTagWindow;
+export default useCategoryWindow;

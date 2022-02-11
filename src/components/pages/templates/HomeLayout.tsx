@@ -3,13 +3,12 @@ import useApiRequests from '../../../hooks/useApiRequests';
 import Sidebar from '../../Leyouts/Sidebar';
 
 type Props = {
-  tag: string | undefined;
-  updateTag: (tagName: string) => void;
+  updateCategory: (categoryName: string) => void;
   children: ReactElement;
 };
 
 const HomeLayout: VFC<Props> = (props) => {
-  const { tag, updateTag, children } = props;
+  const { updateCategory, children } = props;
   const { fetchNotes } = useApiRequests();
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const HomeLayout: VFC<Props> = (props) => {
 
   return (
     <div className="flex h-full ">
-      <Sidebar tag={tag} updateTag={updateTag} />
+      <Sidebar updateCategory={updateCategory} />
       {children}
     </div>
   );

@@ -4,21 +4,20 @@ import useMyPage from '../../../hooks/useMyPage';
 import type NoteType from '../../../types/NoteType';
 
 type Props = {
-  tag: string | undefined;
-  updateTag: (tagName: string) => void;
+  updateCategory: (categoryName: string) => void;
   notes: NoteType[];
-  tags: string[];
+  categories: string[];
   windowTitle: string;
   toggleOpen: () => void;
 };
 
-const TagsWindow: VFC<Props> = (props) => {
-  const { updateTag, tags, toggleOpen, windowTitle } = props;
+const CategoryWindow: VFC<Props> = (props) => {
+  const { updateCategory, categories, toggleOpen, windowTitle } = props;
   const { setPageId } = useMyPage();
 
-  const clickTag = (tagName: string) => {
-    updateTag(tagName);
-    setPageId('tags');
+  const clickTCategory = (categoryName: string) => {
+    updateCategory(categoryName);
+    setPageId('category');
     toggleOpen();
   };
   return (
@@ -27,11 +26,11 @@ const TagsWindow: VFC<Props> = (props) => {
       id="is-scroll"
     >
       <div className="font-bold text-white">{windowTitle}</div>
-      {tags.map((item: string) => {
+      {categories.map((item: string) => {
         return (
           <Button
             className="flex mt-5 w-full bg-gray-700 rounded-md hover:bg-gray-500 p-2"
-            buttonAction={() => clickTag(item)}
+            buttonAction={() => clickTCategory(item)}
             key={item}
           >
             <>
@@ -46,4 +45,4 @@ const TagsWindow: VFC<Props> = (props) => {
   );
 };
 
-export default TagsWindow;
+export default CategoryWindow;
