@@ -31,6 +31,9 @@ const NoteTextArea: VFC<Props> = (props) => {
   const [titleValue] = useDebounce(titleChangeHandler.input, 1000);
   const [descriptionValue] = useDebounce(descriptionChangeHandler.input, 1000);
   const [categoryValue] = useDebounce(categoryChangeHandler.input, 1000);
+  const markDiv = {
+    isFavorite: 1,
+  };
 
   // 追加/削除前のnotesの長さを保持する
   const preNoteLength = useRef<number>(notes.length);
@@ -142,7 +145,7 @@ const NoteTextArea: VFC<Props> = (props) => {
                   <AiFillDelete size="32" color="#4ade80" />
                 </Button>
 
-                {currentNote.mark_div === 1 ? (
+                {currentNote.mark_div === markDiv.isFavorite ? (
                   <Button className="" buttonAction={() => changeMark(0)}>
                     <AiFillStar size="32" color="#4ade80" />
                   </Button>

@@ -35,6 +35,9 @@ const SidebarButtonList: VFC<Props> = (props) => {
   const favoritSubWindow = useSubWindow();
   const tmpCategorys: string[] = notes.map((note: NoteType) => note.category);
   const categories: string[] = [];
+  const markDiv = {
+    isFavorite: 1,
+  };
 
   const initCategories = () => {
     tmpCategorys.map((item) => {
@@ -43,7 +46,7 @@ const SidebarButtonList: VFC<Props> = (props) => {
   };
 
   const favoriteNotes = notes.filter((note: NoteType) => {
-    return note.mark_div === 1;
+    return note.mark_div === markDiv.isFavorite;
   });
 
   initCategories();

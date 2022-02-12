@@ -15,6 +15,9 @@ const HomeBody: VFC<Props> = (props) => {
   const { query } = useResponsive();
   const { updateCurrentNote } = useNotes();
   const userName = localStorage.getItem('userName');
+  const markDiv = {
+    isFavorite: 1,
+  };
 
   useEffect(() => {
     if (notes.length > 0) {
@@ -49,7 +52,7 @@ const HomeBody: VFC<Props> = (props) => {
               <NoteHoriozonList
                 isLoading={isLoading}
                 notes={notes.filter((note: NoteType) => {
-                  return note.mark_div === 1;
+                  return note.mark_div === markDiv.isFavorite;
                 })}
                 wrapMsg="お気に入りノート"
               />

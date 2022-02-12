@@ -7,4 +7,8 @@ type Note = {
   mark_div: number | undefined;
 };
 
+export type markDiv = {
+  isFavorite: number;
+};
+
 export default Note;
