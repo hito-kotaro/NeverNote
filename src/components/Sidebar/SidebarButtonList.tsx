@@ -33,16 +33,21 @@ const SidebarButtonList: VFC<Props> = (props) => {
   const { toggelOpen, isOpen } = useSearchNote();
   const categoryWindow = useCategoryWindow();
   const favoritSubWindow = useSubWindow();
-  const tmpCategorys: string[] = notes.map((note: NoteType) => note.category);
+
   const categories: string[] = [];
   const markDiv = {
     isFavorite: 1,
   };
 
   const initCategories = () => {
-    tmpCategorys.map((item) => {
-      if (!categories.includes(item)) categories.push(item);
-    });
+    if (notes.length > 0) {
+      const tmpCategorys: string[] = notes.map(
+        (note: NoteType) => note.category,
+      );
+      tmpCategorys.map((item) => {
+        if (!categories.includes(item)) categories.push(item);
+      });
+    }
   };
 
   const favoriteNotes = notes.filter((note: NoteType) => {
