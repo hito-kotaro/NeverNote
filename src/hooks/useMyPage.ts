@@ -8,7 +8,7 @@ const useMypage = () => {
   const [pageId, setPageId] = useRecoilState(pageIdState);
 
   const clickNote = (note: NoteType, to: string) => {
-    if (to === 'note') {
+    if (to === 'note' || to === 'categories') {
       updateCurrentNote(note);
     }
     setPageId(to);

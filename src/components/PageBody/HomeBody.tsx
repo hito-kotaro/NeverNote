@@ -15,6 +15,9 @@ const HomeBody: VFC<Props> = (props) => {
   const { query } = useResponsive();
   const { updateCurrentNote } = useNotes();
   const userName = localStorage.getItem('userName');
+  const markDiv = {
+    isFavorite: 1,
+  };
 
   useEffect(() => {
     if (notes.length > 0) {
@@ -23,7 +26,7 @@ const HomeBody: VFC<Props> = (props) => {
       const dummyNote: NoteType = {
         id: '-999',
         title: 'dummyNote',
-        category: undefined,
+        category: '未分類',
         description: '',
         date: '',
         mark_div: 0,
@@ -48,15 +51,10 @@ const HomeBody: VFC<Props> = (props) => {
             <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
               <NoteHoriozonList
                 isLoading={isLoading}
-                notes={notes}
-                wrapMsg="最近使用したノート"
-              />
-            </div>
-            <div className="mx-5 mt-10  p-2 rounded-md bg-gray-800">
-              <NoteHoriozonList
-                isLoading={isLoading}
-                notes={notes}
-                wrapMsg="最近削除したノート"
+                notes={notes.filter((note: NoteType) => {
+                  return note.mark_div === markDiv.isFavorite;
+                })}
+                wrapMsg="お気に入りノート"
               />
             </div>
           </div>

@@ -12,6 +12,7 @@ const useSearchNote = () => {
     setIsOpen(!isOpen);
   }, [isOpen]);
 
+  // 検索した結果をStateにセットする
   const searchNote = useCallback((input: string) => {
     const filterd = notes.filter((note) => {
       return !note.title.indexOf(input) && input.length !== 0;

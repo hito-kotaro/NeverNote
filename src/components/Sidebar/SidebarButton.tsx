@@ -1,17 +1,17 @@
 import React, { ReactElement, VFC } from 'react';
 import BalloonTemplate from './BalloonTemplate/BalloonTemplate';
 import Button from '../Button/Button';
-import SearchWindow from './Search/SearchWindow';
 
 type Props = {
   balloonMsg: string;
   buttonAction: () => void;
   children: ReactElement;
-  isOpen: boolean;
+  isOpen?: boolean;
+  openWindow?: ReactElement;
 };
 
 const SidebarCommonButton: VFC<Props> = (props) => {
-  const { isOpen, balloonMsg, buttonAction, children } = props;
+  const { isOpen, balloonMsg, buttonAction, children, openWindow } = props;
 
   return (
     <div className="flex justify-center px-2 mt-2">
@@ -24,7 +24,7 @@ const SidebarCommonButton: VFC<Props> = (props) => {
         </Button>
       </BalloonTemplate>
 
-      {isOpen ? <SearchWindow toggelOpen={buttonAction} /> : ''}
+      {isOpen ? openWindow : ''}
     </div>
   );
 };

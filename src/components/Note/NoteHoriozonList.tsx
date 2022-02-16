@@ -2,7 +2,6 @@
 import React, { VFC } from 'react';
 import NoteListItem from './NoteListItem';
 import Loading from '../Loading/Loading';
-import NoteEmptyDisplay from './NoteEmptyDisplay';
 import type NoteType from '../../types/NoteType';
 
 type Props = {
@@ -21,14 +20,10 @@ const NoteHoriozonList: VFC<Props> = (props) => {
           <div className=" mx-auto">
             <Loading className="mx-auto animate-spin h-20  w-20 border-8 border-gray-600 rounded-full border-t-transparent" />
           </div>
-        ) : notes.length > 0 ? (
+        ) : (
           notes.map((note: NoteType) => (
             <NoteListItem key={note.id} note={note} />
           ))
-        ) : (
-          <div className="flex w-full justify-center my-10">
-            <NoteEmptyDisplay />
-          </div>
         )}
       </div>
     </div>

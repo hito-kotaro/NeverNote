@@ -43,7 +43,7 @@ const useApiRequests = () => {
     const today = dayjs().format('YYYY/MM/DD');
     const newNote: newNoteType = {
       title: 'Untitled',
-      category: undefined,
+      category: '未分類',
       description: '',
       date: today,
       mark_div: 0,
@@ -76,32 +76,30 @@ const useApiRequests = () => {
     }
   }, []);
 
-  const saveNote = useCallback(
-    async (id: string, title: string, description: string | undefined) => {
-      if (title === '') {
-        return;
-      }
+  const saveNote = useCallback(async (newNote: NoteType) => {
+    if (newNote.title === '') {
+      return;
+    }
 
-      const newData: NoteType = {
-        id,
-        title,
-        category: undefined,
-        description,
-        date: undefined,
-        mark_div: undefined,
-      };
-      try {
-        setIsLoading(true);
-        await axiosTokenInstance.put(`/memo/${id}`, newData);
+    if (newNote.id === '-999') {
+      return;
+    }
+    setIsLoading(true);
+    await axiosTokenInstance
+      .put(`/memo/${newNote.id}`, newNote)
+      .then(async () => {
         setIsLoading(false);
         await fetchNotes();
-        updateCurrentNote(newData);
-      } catch (error) {
-        closeSettion();
-      }
-    },
-    [],
-  );
+        updateCurrentNote(newNote);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          closeSettion();
+        } else {
+          toast.error('サーバとの通信に失敗しました');
+        }
+      });
+  }, []);
 
   return {
     isLoading,
