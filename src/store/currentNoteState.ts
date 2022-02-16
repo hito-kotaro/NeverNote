@@ -10,7 +10,7 @@ const defaultNote: Note = {
   mark_div: 0,
 };
 
-export const currentNoteState = atom<Note>({
+const currentNoteState = atom<Note>({
   key: 'NOTE_STATE',
   default: defaultNote,
 });
