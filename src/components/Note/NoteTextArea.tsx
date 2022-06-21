@@ -157,7 +157,7 @@ const NoteTextArea: VFC<Props> = (props) => {
 
                 {isLoading ? (
                   <div className="h-8 w-8">
-                    <Loading className="mx-auto animate-spin h-8 w-8 border-8 border-gray-600 rounded-full border-t-transparent" />
+                    <Loading size={8} />
                   </div>
                 ) : (
                   <div className="bg-gray-900 h-8 w-8"> </div>
